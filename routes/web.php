@@ -11,7 +11,4 @@
 |
 */
 
-Route::get('chose-status', 'AuthController@choseStatus')->name('chose-status');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', 'AuthController@choseStatus')->name('chose-status');
