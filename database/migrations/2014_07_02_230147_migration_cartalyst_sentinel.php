@@ -1,4 +1,5 @@
 <?php
+namespace database\migrations;
 
 /**
  * Part of the Sentinel package.
