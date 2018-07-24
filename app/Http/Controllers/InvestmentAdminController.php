@@ -84,7 +84,11 @@ class InvestmentAdminController extends Controller
             $user = $this->service->registerAndActivateNewUser($inputs);
             Sentinel::login($user, false);
 
-            return Redirect::to('/investment-admin/dashboard')->with('success', 'You are registered!');
+            return Redirect::to('/investment-admin/dashboard')->with(
+                "success",
+                "{$user->first_name}, you are registered! Welcome as Investment Admin!"
+            );
+
         } catch (UserExistsException $e) {
             return Redirect::back()->withInput()->withErrors($this->messageBag);
         }

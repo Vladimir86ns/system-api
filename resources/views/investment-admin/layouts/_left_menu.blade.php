@@ -20,7 +20,7 @@
             <li {!! (Request::is('groups') ? 'class="active" id="active"' : '') !!}>
                 <a href="#">
                     <i class="fa fa-angle-double-right"></i>
-                    Get All Investments
+                    All Investments
                 </a>
             </li>
         </ul>
