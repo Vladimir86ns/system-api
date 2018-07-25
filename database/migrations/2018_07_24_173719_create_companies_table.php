@@ -25,8 +25,8 @@ class CreateCompaniesTable extends Migration
             $table->string('phone_number')->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
             $table->foreign('owner_id')->references('id')->on('users');
-            $table->integer('investment_admin_id')->unsigned()->nullable();
-            $table->foreign('investment_admin_id')->references('id')->on('investment_admins');
+            $table->integer('admin_investment_id')->unsigned()->nullable();
+            $table->foreign('admin_investment_id')->references('id')->on('admin_investments');
             $table->timestamps();
         });
     }

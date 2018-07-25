@@ -26,7 +26,7 @@
         </ul>
         <ul class="sub-menu">
             <li {!! (Request::is('groups') ? 'class="active" id="active"' : '') !!}>
-                <a href="#">
+                <a href="/investment-admin/create">
                     <i class="fa fa-angle-double-right"></i>
                     New Investments
                 </a>

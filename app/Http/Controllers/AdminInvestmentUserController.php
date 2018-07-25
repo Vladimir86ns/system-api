@@ -5,34 +5,34 @@ namespace App\Http\Controllers;
 use Redirect;
 use Sentinel;
 use Illuminate\Http\Request;
-use App\Http\Requests\InvestmentAdminRequest;
-use App\Services\InvestmentAdmin\InvestmentAdminService;
-use App\Services\InvestmentAdmin\InvestmentAdminValidationService;
+use App\Http\Requests\AdminInvestmentRequest;
+use App\Services\AdminInvestment\AdminInvestmentUserService;
+use App\Services\AdminInvestment\AdminInvestmentUserValidationService;
 
-class InvestmentAdminController extends Controller
+class AdminInvestmentUserController extends Controller
 {
     const USER_INVESTOR_ROLE = 'Investor';
 
     /**
-     * @var InvestmentAdminValidationService
+     * @var AdminInvestmentUserValidationService
      */
-    protected $validationService;
+    protected $validationUserService;
 
     /**
-     * @var InvestmentAdminService
+     * @var AdminInvestmentUserService
      */
-    protected $service;
+    protected $userService;
 
     /**
      * InvestmentController
      *
      */
     public function __construct(
-        InvestmentAdminValidationService $investmentAdminValidationService,
-        InvestmentAdminService $investmentAdminService
+        AdminInvestmentUserValidationService $validationUserService,
+        AdminInvestmentUserService $userService
     ) {
-        $this->validationService = $investmentAdminValidationService;
-        $this->service = $investmentAdminService;
+        $this->validationUserService = $validationUserService;
+        $this->userService = $userService;
     }
 
     public function dashboard()
@@ -65,23 +65,23 @@ class InvestmentAdminController extends Controller
      *
      * @return Redirect
      */
-    public function signUp(InvestmentAdminRequest $request)
+    public function signUp(AdminInvestmentRequest $request)
     {
         $inputs = $request->all();
-        $user = $this->service->checkUserAlreadyExist($inputs);
+        $user = $this->userService->checkUserAlreadyExist($inputs);
 
         if ($user) {
-            return $this->service->addNewPermissionToUserAndRedirect($user);
+            return $this->userService->addNewPermissionToUserAndRedirect($user);
         }
 
-        $available = $this->validationService->isEmailAvailable($request->get('email'));
+        $available = $this->validationUserService->isEmailAvailable($request->get('email'));
 
         if ($available) {
             return view('investment-admin.login')->with('error', trans('auth/message.account_already_exists'));
         }
 
         try {
-            $user = $this->service->registerAndActivateNewUser($inputs);
+            $user = $this->userService->registerAndActivateNewUser($inputs);
             Sentinel::login($user, false);
 
             return Redirect::to('/investment-admin/dashboard')->with(

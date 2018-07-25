@@ -15,11 +15,12 @@ Route::get('/', 'AuthController@choseStatus');
 
 //  INVESTMENTS-ADMIN
 Route::group([ 'prefix' => 'investment-admin'], function () {
-    Route::get('/dashboard', 'InvestmentAdminController@dashboard');
+    Route::get('/dashboard', 'AdminInvestmentUserController@dashboard');
+    Route::get('/create', 'AdminInvestmentController@create');
     // WITHOUT MIDDLEWARE
-    Route::get('/login', 'InvestmentAdminController@getSignIn');
-    Route::post('/sign-up', 'InvestmentAdminController@signUp');
-    Route::post('/sign-in', 'InvestmentAdminController@signIn');
+    Route::get('/login', 'AdminInvestmentUserController@getSignIn');
+    Route::post('/sign-up', 'AdminInvestmentUserController@signUp');
+    Route::post('/sign-in', 'AdminInvestmentUserController@signIn');
 });
 
 //  INVESTOR
