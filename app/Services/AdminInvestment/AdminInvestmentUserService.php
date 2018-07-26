@@ -46,7 +46,7 @@ class AdminInvestmentUserService
     public function registerAndActivateNewUser(array $attributes)
     {
         $permissions = [
-            'investment-admin' => 1,
+            'admin-investment' => 1,
         ];
 
         // Register the user as investor-admin
