@@ -17,7 +17,7 @@ class CreateAdminInvestmentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->decimal('total_investition', 10, 2);
-            $table->decimal('collected_to_date', 10, 2);
+            $table->decimal('collected_to_date', 10, 2)->default(0);
             $table->string('city');
             $table->string('country');
             $table->string('address');

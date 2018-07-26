@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Redirect;
 use Sentinel;
 use Illuminate\Http\Request;
-use App\Http\Requests\AdminInvestmentRequest;
+use App\Http\Requests\AdminInvestmentUserRequest;
 use App\Services\AdminInvestment\AdminInvestmentUserService;
 use App\Services\AdminInvestment\AdminInvestmentUserValidationService;
 
@@ -53,7 +53,7 @@ class AdminInvestmentUserController extends Controller
     {
         // Is the user logged in?
         if (Sentinel::check()) {
-            return redirect::route('investments-admin-dashboard');
+            return redirect('/investment-admin/dashboard');
         }
 
         // Show the page
@@ -65,7 +65,7 @@ class AdminInvestmentUserController extends Controller
      *
      * @return Redirect
      */
-    public function signUp(AdminInvestmentRequest $request)
+    public function signUp(AdminInvestmentUserRequest $request)
     {
         $inputs = $request->all();
         $user = $this->userService->checkUserAlreadyExist($inputs);

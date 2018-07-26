@@ -3,7 +3,7 @@
 {{-- Page title --}}
 @section('title')
   Create investment
-@parent
+  @parent
 @stop
 
 {{-- page level styles --}}
@@ -20,8 +20,6 @@
 
 {{-- Page content --}}
 @section('content')
-@include('investment-admin.form.investment.create')
+  @include('investment-admin.form.investment.create')
+@stop
 
-@stop
-  @section('footer_scripts')
-@stop
