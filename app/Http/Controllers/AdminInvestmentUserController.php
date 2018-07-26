@@ -88,7 +88,6 @@ class AdminInvestmentUserController extends Controller
                 "success",
                 "{$user->first_name}, you are registered! Welcome as Investment Admin!"
             );
-
         } catch (UserExistsException $e) {
             return Redirect::back()->withInput()->withErrors($this->messageBag);
         }
