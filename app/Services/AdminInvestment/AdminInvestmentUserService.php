@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\InvestmentAdmin;
+namespace App\Services\AdminInvestment;
 
 use Sentinel;
 use App\User;
 use App\InvestmentsAdmin;
 
-class InvestmentAdminService
+class AdminInvestmentUserService
 {
     /**
      * Check dose user already exist with given email and password.

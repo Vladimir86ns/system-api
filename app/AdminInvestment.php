@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InvestmentAdmin extends Model
+class AdminInvestment extends Model
 {
     const PENDING = 'PENDING';
     const APPROVED = 'APPROVED';
