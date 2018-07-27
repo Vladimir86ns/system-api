@@ -18,7 +18,7 @@
     @endif
 
     @if ($editInvestment)
-      @include('investment-admin.form.edit')
+      @include('investment-admin.form.investment.edit')
     @endif
   </section>
 @stop

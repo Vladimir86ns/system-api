@@ -20,6 +20,8 @@ Route::group([ 'prefix' => 'investment-admin'], function () {
         Route::get('/create', 'AdminInvestmentController@create');
         Route::get('/get-all-investments', 'AdminInvestmentController@getAllInvestments');
         Route::post('/store', 'AdminInvestmentController@store');
+        Route::get('/edit/{id}', 'AdminInvestmentController@edit');
+        Route::post('/update/{id}', 'AdminInvestmentController@update');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'AdminInvestmentUserController@getSignIn');

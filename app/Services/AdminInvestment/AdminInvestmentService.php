@@ -43,9 +43,21 @@ class AdminInvestmentService
     }
 
     /**
+     * Get single investment
+     *
+     * @param int $id Investment ID
+     * @return AdminInvestment
+     */
+    public function getInvestment($id)
+    {
+        return AdminInvestment::find($id);
+    }
+
+    /**
      * Store new investments in DB
      *
      * @param array $attributes
+     * @return AdminInvestment
      */
     public function storeInvestment(array &$attributes)
     {
@@ -54,10 +66,28 @@ class AdminInvestmentService
         return AdminInvestment::create(array_except($attributes, ['token']));
     }
 
+
+    /**
+     * Get all investment from transformer
+     *
+     * @return array AdminInvestment
+     */
     public function getAllInvestmentsFromTransformer()
     {
         $result = new Collection($this->getAll(), $this->transformer);
 
         return $this->fractal->createData($result)->toArray();
+    }
+
+    /**
+     * Update investment
+     *
+     * @param array $attributes
+     * @param int $id
+     * @return AdminInvestment
+     */
+    public function updateInvestment(array $attributes, int $id)
+    {
+        AdminInvestment::where('id', $id)->update($attributes);
     }
 }

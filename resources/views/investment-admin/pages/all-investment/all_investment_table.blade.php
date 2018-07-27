@@ -45,7 +45,7 @@
                 </td>
                 <td>
                   @if(!$investment['on_production'])
-                    <a href="/investments-admin/edit-investments/{{ $investment['id'] }}">
+                    <a href="/investment-admin/edit/{{ $investment['id'] }}">
                       <i class="fa fa-fw fa-pencil"></i>
                     </a>
                     <a href="/investments-admin/all-and-selected-investments/{{ $investment['id'] }}">
