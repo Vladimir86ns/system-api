@@ -25,7 +25,7 @@ class AdminInvestmentController extends Controller
     /**
      * Show form for creating a new investments.
      *
-     * @return \Illuminate\Http\Response
+     * @return redirect
      */
     public function create()
     {
@@ -35,8 +35,8 @@ class AdminInvestmentController extends Controller
     /**
      * Save in DB new investment.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\AdminInvestmentService
+     * @return redirect
      */
     public function store(AdminInvestmentCreateRequest $request)
     {
@@ -51,7 +51,7 @@ class AdminInvestmentController extends Controller
     /**
      * Get all investment
      *
-     * @return \Illuminate\Http\Response
+     * @return redirect
      */
     public function getAllInvestments()
     {
@@ -66,5 +66,42 @@ class AdminInvestmentController extends Controller
             'transformedInvestment',
             'editInvestment',
             ]));
+    }
+
+    /**
+     * Show the form for editing investment.
+     *
+     * @param int $id Investment ID
+     * @return redirect
+     */
+    public function edit($id)
+    {
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+        $editInvestment = $this->service->getInvestment($id);
+
+        // selected investment is not included
+        $transformedInvestment = null;
+
+        return view('investment-admin.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Update investment.
+     *
+     * @param App\Http\Requests\AdminInvestmentService
+     * @param int $id Investment ID
+     * @return redirect
+     */
+    public function update(AdminInvestmentCreateRequest $request, $id)
+    {
+        $inputs = $request->except(['_token', 'btnSubmit']);
+        $this->service->updateInvestment($inputs, $id);
+
+        return redirect('/investment-admin/get-all-investments')
+            ->with('success', 'Updated investment successfully!');
     }
 }

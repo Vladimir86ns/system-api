@@ -8,7 +8,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <form action="/investments-admin/update-investments/{{ $editInvestment['id'] }}" method="POST" onsubmit="return Validation()" role="form" id="create_investments">
+          <form action="/investment-admin/update/{{ $editInvestment['id'] }}" method="POST" onsubmit="return Validation()" role="form" id="create_investments">
 
           <div class="col-md-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
