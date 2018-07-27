@@ -52,7 +52,7 @@
               <input type="submit" name="btnSubmit" id="btnSubmit" value="Update Investment" class="btn btn-success btn-block btn-md btn-responsive">
             </div>
             <div class="col-xs-6 col-md-6">
-              <a class="btn btn-danger btn-block btn-md btn-responsive" href="/investments-admin/all-investments">
+              <a class="btn btn-danger btn-block btn-md btn-responsive" href="/investment-admin/get-all-investments">
                 Cancel
               </a>
             </div>
