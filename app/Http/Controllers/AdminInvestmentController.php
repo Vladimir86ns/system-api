@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminInvestmentCreateRequest;
 use App\Services\AdminInvestment\AdminInvestmentService;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ **/
 class AdminInvestmentController extends Controller
 {
     /**
@@ -157,7 +160,7 @@ class AdminInvestmentController extends Controller
             ]));
     }
 
-        /**
+    /**
      * Reject or delete investment
      *
      * @param int $id Investment ID
@@ -166,18 +169,6 @@ class AdminInvestmentController extends Controller
     public function delete($id)
     {
         $isDeleted = $this->service->delete($id);
-
-        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
-
-        // selected investment is included and check is maybe deleted
-        $transformedInvestment = false;
-        $investment = $this->service->getInvestment($id);
-        if ($investment) {
-            $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
-        }
-
-        // edit investment is not included
-        $editInvestment = null;
 
         if (!$isDeleted) {
             return back()->with('error', 'Id of investment is invalid!');
