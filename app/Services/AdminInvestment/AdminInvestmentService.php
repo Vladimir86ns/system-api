@@ -151,6 +151,30 @@ class AdminInvestmentService
         }
     }
 
+
+    /**
+     * Save investment in DB
+     *
+     * @param array $attributes
+     * @param App\AdminInvestment
+     * @param int $id
+     */
+    public function createProject(array &$attributes, AdminInvestment $investmentsAdmin)
+    {
+        if ($investmentsAdmin['on_production']) {
+            return false;
+        }
+
+        $attributes['total_amount'] = $investmentsAdmin->total_investition;
+        $attributes['expense'] = $investmentsAdmin->total_investition;
+
+        $investmentsAdmin->companies()->create($attributes);
+        $investmentsAdmin->on_production = true;
+        $investmentsAdmin->update();
+
+        return $investmentsAdmin->on_production;
+    }
+
     /**
      * Get all owners
      *
@@ -159,12 +183,14 @@ class AdminInvestmentService
     public function getAllOwners()
     {
         return User::all()->filter(function ($value) {
-            if (array_has($value['permissions'], 'owner')) {
+            $permissions = json_decode($value->permissions, true);
+            if (!array_has($permissions, 'owner')) {
+                return;
+            }
+
+            if ($permissions['owner'] == 1) {
                 return $value;
             }
-        })
-        ->filter(function ($value) {
-            return $value['permissions']['owner'] == 1;
         })->toArray();
     }
 }

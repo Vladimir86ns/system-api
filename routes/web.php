@@ -24,6 +24,7 @@ Route::group([ 'prefix' => 'investment-admin'], function () {
         Route::get('/delete/{id}', 'AdminInvestmentController@delete');
         Route::get('/approve-or-un-approve/{id}', 'AdminInvestmentController@approveOrUnApprove');
         Route::get('/before-confirm/{id}', 'AdminInvestmentController@beforeConfirm');
+        Route::post('/confirm/{id}', 'AdminInvestmentController@confirm');
         Route::get('/delete/{id}', 'AdminInvestmentController@delete');
         Route::post('/store', 'AdminInvestmentController@store');
         Route::get('/edit/{id}', 'AdminInvestmentController@edit');

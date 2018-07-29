@@ -227,11 +227,40 @@ class AdminInvestmentController extends Controller
         // selected investment is not included
         $transformedInvestment = null;
 
-        return view('investment-admin.before-production.selected', compact([
+        return view('investment-admin.pages.select_owner', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
             'allOwners'
         ]));
+    }
+
+    /**
+     * Confirm investment and save in project
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(AdminInvestmentCreateRequest $request, $id)
+    {
+        $request->validate([
+            'owner_id' => 'required|integer',
+        ]);
+
+        $inputs = $request->all();
+
+        $adminInvestment = $this->service->getInvestment($id);
+        if (!$adminInvestment) {
+            return back()->with('error', 'Investment not found!');
+        }
+
+        $isCreated = $this->service->createProject($inputs, $adminInvestment);
+        if (!$isCreated) {
+            return back()->with('error', 'This investment is already on production!');
+        }
+
+        return redirect('/investment-admin/get-all-investments')
+            ->with('success', 'Investment is on production!');
     }
 }
