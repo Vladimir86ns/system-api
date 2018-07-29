@@ -38,9 +38,9 @@ class AdminInvestmentUserController extends Controller
     public function dashboard()
     {
         if (Sentinel::check()) {
-            return view('investment-admin.dashboard');
+            return view('investment-admin.pages.dashboard');
         } else {
-            return view('investment-admin.login')->with('error', 'You must be logged in!');
+            return view('investment-admin.pages.login')->with('error', 'You must be logged in!');
         }
     }
 
@@ -57,7 +57,7 @@ class AdminInvestmentUserController extends Controller
         }
 
         // Show the page
-        return view('investment-admin.login');
+        return view('investment-admin.pages.login');
     }
 
     /**
@@ -77,7 +77,7 @@ class AdminInvestmentUserController extends Controller
         $available = $this->validationUserService->isEmailAvailable($request->get('email'));
 
         if ($available) {
-            return view('investment-admin.login')->with('error', trans('auth/message.account_already_exists'));
+            return view('investment-admin.pages.login')->with('error', trans('auth/message.account_already_exists'));
         }
 
         try {
@@ -102,7 +102,7 @@ class AdminInvestmentUserController extends Controller
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
             // Redirect to the dashboard page
-            return view('investment-admin.dashboard');
+            return view('investment-admin.pages.dashboard');
         } else {
             return Redirect::to('investment-admin/login')->with('error', 'Your email or password are not correct!');
         }

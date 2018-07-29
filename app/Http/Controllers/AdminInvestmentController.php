@@ -29,7 +29,7 @@ class AdminInvestmentController extends Controller
      */
     public function create()
     {
-        return view('investment-admin.create_investment');
+        return view('investment-admin.pages.create_investment');
     }
 
     /**
@@ -61,7 +61,7 @@ class AdminInvestmentController extends Controller
         $transformedInvestment = null;
         $editInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
@@ -82,7 +82,7 @@ class AdminInvestmentController extends Controller
         // selected investment is not included
         $transformedInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
@@ -121,7 +121,7 @@ class AdminInvestmentController extends Controller
         // edit investment is not included
         $editInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
@@ -134,9 +134,9 @@ class AdminInvestmentController extends Controller
      * @param int $id Investment ID
      * @return \Illuminate\Http\Response
      */
-    public function rejectOrDelete($id)
+    public function reject($id)
     {
-        $this->service->rejectOrDelete($id);
+        $this->service->reject($id);
 
         $allInvestments = $this->service->getAllInvestmentsFromTransformer();
 
@@ -150,11 +150,41 @@ class AdminInvestmentController extends Controller
         // edit investment is not included
         $editInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
             ]));
+    }
+
+        /**
+     * Reject or delete investment
+     *
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $isDeleted = $this->service->delete($id);
+
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included and check is maybe deleted
+        $transformedInvestment = false;
+        $investment = $this->service->getInvestment($id);
+        if ($investment) {
+            $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+        }
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        if (!$isDeleted) {
+            return back()->with('error', 'Id of investment is invalid!');
+        }
+
+        return redirect('/investment-admin/get-all-investments')
+            ->with('success', 'You jut deleted investment successfully!');
     }
 
     /**
@@ -175,10 +205,33 @@ class AdminInvestmentController extends Controller
         // edit investment is not included
         $editInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
             ]));
+    }
+
+    /**
+     * Before confirm investments fill up with more data
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @return \Illuminate\Http\Response
+     */
+    public function beforeConfirm($id)
+    {
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+        $editInvestment = $this->service->getInvestment($id);
+        $allOwners = $this->service->getAllOwners();
+
+        // selected investment is not included
+        $transformedInvestment = null;
+
+        return view('investment-admin.before-production.selected', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            'allOwners'
+        ]));
     }
 }

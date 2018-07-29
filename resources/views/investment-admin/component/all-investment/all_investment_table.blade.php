@@ -52,12 +52,12 @@
                       <i class="fa fa-fw fa-search"></i>
                     </a>
                     @if ($investment['status'] === 'APPROVED')
-                      <a href="/investment-admin/before-confirm-investment/{{ $investment['id'] }}">
+                      <a href="/investment-admin/before-confirm/{{ $investment['id'] }}">
                         <i class="fa fa-fw fa-hand-o-right"></i>
                       </a>
                     @endif
                     @if ($investment['status'] === 'REJECTED')
-                      <a href="/investment-admin/rejected-or-delete/{{ $investment['id'] }}"
+                      <a href="/investment-admin/delete/{{ $investment['id'] }}"
                         onclick="return confirm('This will delete the investment. Are you sure you want to proceed?')">
                         <i class="fa fa-fw fa-trash-o"></i>
                       </a>

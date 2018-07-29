@@ -6,7 +6,7 @@
         <div class="caption">
           <i data-name="responsive" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> Details before accept
           <span class="pull-right">
-            <a href="/investments-admin/all-investments">
+            <a href="/investment-admin/get-all-investments">
               <i style="color: white;" class="fa fa-fw fa-times removepanel clickable"></i>
             </a>
           </span>
@@ -49,7 +49,7 @@
                 </td>
                 <td>
                   @if ($transformedInvestment['status'] != 'REJECTED')
-                  <a href="/investment-admin/rejected-or-delete/{{ $transformedInvestment['id'] }}">
+                  <a href="/investment-admin/reject/{{ $transformedInvestment['id'] }}">
                     <i class="fa fa-fw fa-times"></i>
                   </a>
                   @endif

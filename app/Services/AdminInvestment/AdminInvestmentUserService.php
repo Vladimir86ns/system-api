@@ -34,7 +34,7 @@ class AdminInvestmentUserService
         $user->permissions = $permissions;
         $user->update();
 
-        return view('investment-admin.dashboard')->with('success', 'You are registered!');
+        return view('investment-admin.pages.dashboard')->with('success', 'You are registered!');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Services\AdminInvestment;
 
+use App\User;
 use App\AdminInvestment;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Manager as FractalManager;
@@ -107,16 +108,28 @@ class AdminInvestmentService
      *
      * @param array $attributes
      */
-    public function rejectOrDelete(int $id)
+    public function reject(int $id)
     {
         $investmentsAdmin = $this->getInvestment($id);
-
-        if ($investmentsAdmin['status'] === AdminInvestment::REJECTED) {
-            $investmentsAdmin = AdminInvestment::where('id', $id)->delete();
-        } else {
-            $investmentsAdmin->update(['status' => AdminInvestment::REJECTED]);
-        }
+        $investmentsAdmin->update(['status' => AdminInvestment::REJECTED]);
     }
+
+    /**
+     * Delete investment
+     *
+     * @param array $attributes
+     */
+    public function delete(int $id)
+    {
+        $investmentsAdmin = AdminInvestment::find($id);
+
+        if ($investmentsAdmin) {
+            $investmentsAdmin = AdminInvestment::where('id', $id)->delete();
+        }
+
+        return $investmentsAdmin;
+    }
+
 
     /**
      * Approve investment
@@ -136,5 +149,22 @@ class AdminInvestmentService
         ) {
             $investmentsAdmin->update(['status' => AdminInvestment::APPROVED]);
         }
+    }
+
+    /**
+     * Get all owners
+     *
+     * @return User
+     */
+    public function getAllOwners()
+    {
+        return User::all()->filter(function ($value) {
+            if (array_has($value['permissions'], 'owner')) {
+                return $value;
+            }
+        })
+        ->filter(function ($value) {
+            return $value['permissions']['owner'] == 1;
+        })->toArray();
     }
 }
