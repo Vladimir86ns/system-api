@@ -14,7 +14,7 @@
     @include('investment-admin.pages.all-investment.all_investment_table')
 
     @if ($transformedInvestment)
-      @include('investment-admin.pages.all-investment.single_investment_table.blade')
+      @include('investment-admin.pages.all-investment.single_investment_table')
     @endif
 
     @if ($editInvestment)

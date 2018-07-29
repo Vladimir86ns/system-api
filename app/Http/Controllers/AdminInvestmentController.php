@@ -104,4 +104,81 @@ class AdminInvestmentController extends Controller
         return redirect('/investment-admin/get-all-investments')
             ->with('success', 'Updated investment successfully!');
     }
+
+    /**
+     * Get all investments and selected investment.
+     *
+     * @param $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included
+        $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Reject or delete investment
+     *
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function rejectOrDelete($id)
+    {
+        $this->service->rejectOrDelete($id);
+
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included and check is maybe deleted
+        $transformedInvestment = false;
+        $investment = $this->service->getInvestment($id);
+        if ($investment) {
+            $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+        }
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Approve investment
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @return \Illuminate\Http\Response
+     */
+    public function approveOrUnApprove($id)
+    {
+        $this->service->approveOrUnApprove($id);
+
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included
+        $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
 }

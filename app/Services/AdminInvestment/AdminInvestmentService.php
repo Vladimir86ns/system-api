@@ -90,4 +90,51 @@ class AdminInvestmentService
     {
         AdminInvestment::where('id', $id)->update($attributes);
     }
+
+    /**
+     * Get single investment
+     *
+     * @param id $id Investment ID
+     * @return array
+     */
+    public function getInvestmentFromTransformer($id)
+    {
+        return $this->transformer->transform($this->getInvestment($id));
+    }
+
+    /**
+     * Rejected investment
+     *
+     * @param array $attributes
+     */
+    public function rejectOrDelete(int $id)
+    {
+        $investmentsAdmin = $this->getInvestment($id);
+
+        if ($investmentsAdmin['status'] === AdminInvestment::REJECTED) {
+            $investmentsAdmin = AdminInvestment::where('id', $id)->delete();
+        } else {
+            $investmentsAdmin->update(['status' => AdminInvestment::REJECTED]);
+        }
+    }
+
+    /**
+     * Approve investment
+     *
+     * @param array $attributes
+     */
+    public function approveOrUnApprove(int $id)
+    {
+        $investmentsAdmin = $this->getInvestment($id);
+
+        if ($investmentsAdmin['status'] === AdminInvestment::APPROVED ||
+            $investmentsAdmin['status'] === AdminInvestment::REJECTED
+        ) {
+            $investmentsAdmin->update(['status' => AdminInvestment::PENDING]);
+        } elseif ($investmentsAdmin['status'] === AdminInvestment::PENDING ||
+            $investmentsAdmin['status'] === AdminInvestment::REJECTED
+        ) {
+            $investmentsAdmin->update(['status' => AdminInvestment::APPROVED]);
+        }
+    }
 }
