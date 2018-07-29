@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminInvestmentCreateRequest;
 use App\Services\AdminInvestment\AdminInvestmentService;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ **/
 class AdminInvestmentController extends Controller
 {
     /**
@@ -29,7 +32,7 @@ class AdminInvestmentController extends Controller
      */
     public function create()
     {
-        return view('investment-admin.create_investment');
+        return view('investment-admin.pages.create_investment');
     }
 
     /**
@@ -61,7 +64,7 @@ class AdminInvestmentController extends Controller
         $transformedInvestment = null;
         $editInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
@@ -82,7 +85,7 @@ class AdminInvestmentController extends Controller
         // selected investment is not included
         $transformedInvestment = null;
 
-        return view('investment-admin.all_investment', compact([
+        return view('investment-admin.pages.all_investment', compact([
             'allInvestments',
             'transformedInvestment',
             'editInvestment',
@@ -103,5 +106,152 @@ class AdminInvestmentController extends Controller
 
         return redirect('/investment-admin/get-all-investments')
             ->with('success', 'Updated investment successfully!');
+    }
+
+    /**
+     * Get all investments and selected investment.
+     *
+     * @param $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included
+        $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.pages.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Reject or delete investment
+     *
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function reject($id)
+    {
+        $this->service->reject($id);
+
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included and check is maybe deleted
+        $transformedInvestment = false;
+        $investment = $this->service->getInvestment($id);
+        if ($investment) {
+            $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+        }
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.pages.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Reject or delete investment
+     *
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $isDeleted = $this->service->delete($id);
+
+        if (!$isDeleted) {
+            return back()->with('error', 'Id of investment is invalid!');
+        }
+
+        return redirect('/investment-admin/get-all-investments')
+            ->with('success', 'You jut deleted investment successfully!');
+    }
+
+    /**
+     * Approve investment
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @return \Illuminate\Http\Response
+     */
+    public function approveOrUnApprove($id)
+    {
+        $this->service->approveOrUnApprove($id);
+
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+
+        // selected investment is included
+        $transformedInvestment = $this->service->getInvestmentFromTransformer($id);
+
+        // edit investment is not included
+        $editInvestment = null;
+
+        return view('investment-admin.pages.all_investment', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            ]));
+    }
+
+    /**
+     * Before confirm investments fill up with more data
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @return \Illuminate\Http\Response
+     */
+    public function beforeConfirm($id)
+    {
+        $allInvestments = $this->service->getAllInvestmentsFromTransformer();
+        $editInvestment = $this->service->getInvestment($id);
+        $allOwners = $this->service->getAllOwners();
+
+        // selected investment is not included
+        $transformedInvestment = null;
+
+        return view('investment-admin.pages.select_owner', compact([
+            'allInvestments',
+            'transformedInvestment',
+            'editInvestment',
+            'allOwners'
+        ]));
+    }
+
+    /**
+     * Confirm investment and save in project
+     *
+     * @param  \App\InvestmentsAdmin  $investmentsAdmin
+     * @param int $id Investment ID
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(AdminInvestmentCreateRequest $request, $id)
+    {
+        $request->validate([
+            'owner_id' => 'required|integer',
+        ]);
+
+        $inputs = $request->all();
+
+        $adminInvestment = $this->service->getInvestment($id);
+        if (!$adminInvestment) {
+            return back()->with('error', 'Investment not found!');
+        }
+
+        $isCreated = $this->service->createProject($inputs, $adminInvestment);
+        if (!$isCreated) {
+            return back()->with('error', 'This investment is already on production!');
+        }
+
+        return redirect('/investment-admin/get-all-investments')
+            ->with('success', 'Investment is on production!');
     }
 }

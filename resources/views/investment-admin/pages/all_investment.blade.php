@@ -8,13 +8,13 @@
 
 {{-- Page content --}}
 @section('content')
-  @include('investment-admin.pages.all-investment.dashboard')
+  @include('investment-admin.component.all-investment.dashboard')
 
   <section class="content">
-    @include('investment-admin.pages.all-investment.all_investment_table')
+    @include('investment-admin.component.all-investment.all_investment_table')
 
     @if ($transformedInvestment)
-      @include('investment-admin.pages.all-investment.single_investment_table.blade')
+      @include('investment-admin.component.all-investment.single_investment_table')
     @endif
 
     @if ($editInvestment)

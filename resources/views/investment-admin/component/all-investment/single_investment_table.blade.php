@@ -6,7 +6,7 @@
         <div class="caption">
           <i data-name="responsive" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> Details before accept
           <span class="pull-right">
-            <a href="/investments-admin/all-investments">
+            <a href="/investment-admin/get-all-investments">
               <i style="color: white;" class="fa fa-fw fa-times removepanel clickable"></i>
             </a>
           </span>
@@ -49,16 +49,16 @@
                 </td>
                 <td>
                   @if ($transformedInvestment['status'] != 'REJECTED')
-                  <a href="/investments-admin/rejected-or-delete-investment/{{ $transformedInvestment['id'] }}">
+                  <a href="/investment-admin/reject/{{ $transformedInvestment['id'] }}">
                     <i class="fa fa-fw fa-times"></i>
                   </a>
                   @endif
                   @if ($transformedInvestment['status'] === 'PENDING' || $transformedInvestment['status'] === 'REJECTED')
-                    <a href="/investments-admin/approve-or-un-approve-investment/{{ $transformedInvestment['id'] }}">
+                    <a href="/investment-admin/approve-or-un-approve/{{ $transformedInvestment['id'] }}">
                       <i class="fa fa-fw fa-thumbs-o-up"></i>
                     </a>
                   @elseif  ($transformedInvestment['status'] === 'APPROVED')
-                    <a href="/investments-admin/approve-or-un-approve-investment/{{ $transformedInvestment['id'] }}">
+                    <a href="/investment-admin/approve-or-un-approve/{{ $transformedInvestment['id'] }}">
                       <i class="fa fa-fw fa-thumbs-o-down"></i>
                     </a>
                   @endif
