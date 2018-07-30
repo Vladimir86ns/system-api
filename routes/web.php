@@ -15,6 +15,7 @@ Route::get('/', 'AuthController@choseStatus');
 
 //  INVESTMENTS-ADMIN
 Route::group([ 'prefix' => 'investment-admin'], function () {
+    // WITH MIDDLEWARE
     Route::group(['middleware' => ['check-admin-investments']], function () {
         Route::get('/dashboard', 'AdminInvestmentUserController@dashboard');
         Route::get('/create', 'AdminInvestmentController@create');
