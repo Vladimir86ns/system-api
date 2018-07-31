@@ -38,6 +38,7 @@ class CompanyUserRegisterController extends BaseController
             abort(400, 'Your email or password are not correct!');
         }
 
+        // check dose user has owner permissions
         if (!array_has($user->permissions, 'owner') || $user->permissions['owner'] == 1) {
             abort(400, 'Your are not authorized!');
         }
@@ -56,16 +57,22 @@ class CompanyUserRegisterController extends BaseController
         $user = User::where('email', $credentials['email'])->first();
 
         if (!$user) {
-            abort(400, 'Your email or pin are not correct!');
+            abort(400, 'Your credentials are not correct!');
         }
 
-        if (Hash::check($credentials['company_pin'], $user->company_pin)) {
-            $token = JWTAuth::fromUser($user);
-            $transformedUser = $this->companyUserTransformer->transform($user, $token);
-
-            return $this->response->array($transformedUser);
-        } else {
-            abort(400, 'Your email or pin are not correct!');
+        if (!Hash::check($credentials['company_pin'], $user->company_pin)) {
+            abort(400, 'Your credentials are not correct!');
         }
+
+        $permissions = json_decode($user->permissions, true);
+
+        if (!array_has($permissions, 'owner') || $permissions['owner'] == 1) {
+            abort(400, 'Your are not authorized!');
+        }
+
+        $token = JWTAuth::fromUser($user);
+        $transformedUser = $this->companyUserTransformer->transform($user, $token);
+
+        return $this->response->array($transformedUser);
     }
 }
