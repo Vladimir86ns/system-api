@@ -19,6 +19,7 @@ $api = app(Router::class);
 $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => 'api'], function (Router $api) {
         $api->post('register-company', 'CompanyUserRegisterController@register');
+        $api->post('login-company', 'CompanyUserRegisterController@login');
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
         //
