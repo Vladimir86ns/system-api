@@ -34,11 +34,15 @@ class CompanyUserRegisterController extends BaseController
 
         if (Sentinel::authenticate($request->only(['email', 'password']))) {
             $user = Sentinel::getUser();
-            $token = JWTAuth::fromUser($user);
         } else {
             abort(400, 'Your email or password are not correct!');
         }
 
+        if (!array_has($user->permissions, 'owner') || $user->permissions['owner'] == 1) {
+            abort(400, 'Your are not authorized!');
+        }
+
+        $token = JWTAuth::fromUser($user);
         $user->company_pin = Hash::make($inputs['pin']);
         $user->save();
         $transformedUser = $this->companyUserTransformer->transform($user, $token);
