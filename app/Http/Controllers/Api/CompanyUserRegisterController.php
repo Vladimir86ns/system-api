@@ -39,7 +39,7 @@ class CompanyUserRegisterController extends BaseController
         }
 
         // check dose user has owner permissions
-        if (!array_has($user->permissions, 'owner') || $user->permissions['owner'] == 1) {
+        if (!array_key_exists('owner', $user->permissions) || $user->permissions['owner'] == 0) {
             abort(400, 'Your are not authorized!');
         }
 
@@ -66,7 +66,7 @@ class CompanyUserRegisterController extends BaseController
 
         $permissions = json_decode($user->permissions, true);
 
-        if (!array_has($permissions, 'owner') || $permissions['owner'] == 1) {
+        if (!array_key_exists('owner', $permissions) || $permissions['owner'] == 0) {
             abort(400, 'Your are not authorized!');
         }
 
