@@ -42,6 +42,7 @@ Route::group([ 'prefix' => 'investor'], function () {
     // WITH MIDDLEWARE
     Route::group(['middleware' => ['check-investor']], function () {
         Route::get('/dashboard', 'InvestorUserController@dashboard');
+        Route::get('/get-all/{country}', 'InvestorController@getAllFromCountry');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'InvestorUserController@getSignIn');
