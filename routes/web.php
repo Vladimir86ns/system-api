@@ -38,10 +38,12 @@ Route::group([ 'prefix' => 'investment-admin'], function () {
 });
 
 //  INVESTOR
-Route::group([ 'prefix' => 'investment'], function () {
-
+Route::group([ 'prefix' => 'investor'], function () {
+        Route::get('/dashboard', 'InvestorUserController@dashboard');
     // WITHOUT MIDDLEWARE
-    Route::get('login', 'InvestmentController@getSignIn')->name('investment-login');
+    Route::get('/login', 'InvestorUserController@getSignIn');
+    Route::post('/sign-up', 'InvestorUserController@signUp');
+    Route::post('/sign-in', 'InvestorUserController@signIn');
 });
 
 //  EMPLOYEE
