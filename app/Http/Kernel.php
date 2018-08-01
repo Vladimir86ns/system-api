@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check-admin-investments' => \App\Http\Middleware\CheckAdminInvestment::class,
+        'check-investor' => \App\Http\Middleware\CheckInvestor::class,
     ];
 }

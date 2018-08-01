@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Sentinel;
 
-class CheckAdminInvestment
+class CheckInvestor
 {
     const ROUTE = '/';
 
@@ -24,11 +23,11 @@ class CheckAdminInvestment
 
         $permissions = Sentinel::getUser()->permissions;
 
-        if (empty($permissions['admin-investment'])) {
+        if (empty($permissions['investor'])) {
             return redirect(self::ROUTE);
         }
 
-        if ($permissions['admin-investment'] == 1) {
+        if ($permissions['investor'] == 1) {
             return $next($request);
         }
 
