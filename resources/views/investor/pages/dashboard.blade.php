@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
- VG System
+ Investor
 @parent
 @stop
 
