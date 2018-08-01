@@ -36,9 +36,9 @@ class InvestorUserController extends Controller
     {
         if (Sentinel::check()) {
             return view('investor.pages.dashboard');
-        } else {
-            return view('investor.pages.login')->with('error', 'You must be logged in!');
         }
+
+        return view('investor.pages.login')->with('error', 'You must be logged in!');
     }
 
     /**
@@ -65,9 +65,9 @@ class InvestorUserController extends Controller
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
             // Redirect to the dashboard page
             return view('investor.pages.dashboard');
-        } else {
-            return Redirect::to('investor/login')->with('error', 'Your email or password are not correct!');
         }
+
+        return Redirect::to('investor/login')->with('error', 'Your email or password are not correct!');
     }
 
     /**

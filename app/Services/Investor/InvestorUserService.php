@@ -34,7 +34,7 @@ class InvestorUserService
             'investor' => 1,
         ];
 
-        // Register the user as investor-admin
+        // Register the user as investor
         return Sentinel::registerAndActivate([
             'first_name' => $attributes['first_name'],
             'last_name' => $attributes['last_name'],

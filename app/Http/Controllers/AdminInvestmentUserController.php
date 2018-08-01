@@ -37,9 +37,9 @@ class AdminInvestmentUserController extends Controller
     {
         if (Sentinel::check()) {
             return view('investment-admin.pages.dashboard');
-        } else {
-            return view('investment-admin.pages.login')->with('error', 'You must be logged in!');
         }
+
+        return view('investment-admin.pages.login')->with('error', 'You must be logged in!');
     }
 
     /**
@@ -97,10 +97,10 @@ class AdminInvestmentUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-            // Redirect to the dashboard page
+
             return view('investment-admin.pages.dashboard');
-        } else {
-            return Redirect::to('investment-admin/login')->with('error', 'Your email or password are not correct!');
         }
+
+        return Redirect::to('investment-admin/login')->with('error', 'Your email or password are not correct!');
     }
 }
