@@ -1,24 +1,12 @@
 <?php
 
-namespace App\Services\AdminInvestment;
+namespace App\Services\Investor;
 
 use Sentinel;
-use App\InvestmentsAdmin;
+use Illuminate\Foundation\Auth\User;
 
-class AdminInvestmentUserService
+class InvestorUserService
 {
-    /**
-     * Check dose user already exist with given email and password.
-     *
-     * @param $attributes
-     * @return Redirect
-     */
-    public function checkUserAlreadyExist(array $attributes)
-    {
-        return Sentinel::authenticate(array_only($attributes, ['email', 'password']));
-    }
-
-
     /**
      * Add to existing user new permissions and redirect
      *
@@ -28,23 +16,22 @@ class AdminInvestmentUserService
     {
         $permissions = $user->permissions;
 
-        $permissions['admin_investment'] = 1;
+        $permissions['investor'] = 1;
         $user->permissions = $permissions;
         $user->update();
 
-        return view('investment-admin.pages.dashboard')->with('success', 'You are registered!');
+        return view('investor.pages.dashboard')->with('success', 'You are registered!');
     }
 
     /**
      * Register and activate new user
      *
      * @param array $attributes
-     * @return User
      */
     public function registerAndActivateNewUser(array $attributes)
     {
         $permissions = [
-            'admin-investment' => 1,
+            'investor' => 1,
         ];
 
         // Register the user as investor-admin

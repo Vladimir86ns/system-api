@@ -11,8 +11,6 @@ use App\Services\AdminInvestment\AdminInvestmentUserValidationService;
 
 class AdminInvestmentUserController extends Controller
 {
-    const USER_INVESTOR_ROLE = 'Investor';
-
     /**
      * @var AdminInvestmentUserValidationService
      */
@@ -51,17 +49,15 @@ class AdminInvestmentUserController extends Controller
      */
     public function getSignIn()
     {
-        // Is the user logged in?
         if (Sentinel::check()) {
             return redirect('/investment-admin/dashboard');
         }
 
-        // Show the page
         return view('investment-admin.pages.login');
     }
 
     /**
-     * Account investor sign up form processing.
+     * Account admin investment sign up form processing.
      *
      * @return Redirect
      */
