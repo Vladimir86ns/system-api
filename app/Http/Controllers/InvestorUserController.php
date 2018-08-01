@@ -38,7 +38,8 @@ class InvestorUserController extends Controller
             return view('investor.pages.dashboard');
         }
 
-        return view('investor.pages.login')->with('error', 'You must be logged in!');
+        return view('investor.pages.login')
+            ->with('error', 'You must be logged in!');
     }
 
     /**
@@ -49,7 +50,7 @@ class InvestorUserController extends Controller
     public function getSignIn()
     {
         if (Sentinel::check()) {
-            return redirect('/investment-admin/dashboard');
+            return redirect('/investor/dashboard');
         }
 
         return view('investor.pages.login');
@@ -63,11 +64,12 @@ class InvestorUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-            // Redirect to the dashboard page
+
             return view('investor.pages.dashboard');
         }
 
-        return Redirect::to('investor/login')->with('error', 'Your email or password are not correct!');
+        return redirect('investor/login')
+            ->with('error', 'Your email or password are not correct!');
     }
 
     /**
@@ -84,9 +86,9 @@ class InvestorUserController extends Controller
             return $this->userService->addNewPermissionToUserAndRedirect($user);
         }
 
-        $available = $this->validationUserService->isEmailAvailable($request->get('email'));
+        $notAvailable = $this->validationUserService->isEmailAvailable($request->get('email'));
 
-        if ($available) {
+        if ($notAvailable) {
             return view('investor.pages.login')->with('error', trans('auth/message.account_already_exists'));
         }
 
@@ -94,7 +96,7 @@ class InvestorUserController extends Controller
             $user = $this->userService->registerAndActivateNewUser($inputs);
             Sentinel::login($user, false);
 
-            return redirect()->to('/investor/dashboard')->with(
+            return redirect('/investor/dashboard')->with(
                 "success",
                 "{$user->first_name}, you are registered! Welcome as Investor!"
             );

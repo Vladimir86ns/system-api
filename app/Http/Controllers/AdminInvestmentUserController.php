@@ -101,6 +101,7 @@ class AdminInvestmentUserController extends Controller
             return view('investment-admin.pages.dashboard');
         }
 
-        return Redirect::to('investment-admin/login')->with('error', 'Your email or password are not correct!');
+        return redirect('investment-admin/login')
+            ->with('error', 'Your email or password are not correct!');
     }
 }

@@ -40,9 +40,6 @@ class InvestorController extends Controller
         $allInvestments = $this->service->getAllApprovedForGivenCountry($country);
         $transformedInvestments = $this->service->getFromTransformer($allInvestments);
 
-        // selected investment not included
-        $transformedInvestment = null;
-
-        return view('investor.pages.find_all_investments', compact(['transformedInvestments', 'transformedInvestment']));
+        return view('investor.pages.find_all_investments', compact(['transformedInvestments']));
     }
 }
