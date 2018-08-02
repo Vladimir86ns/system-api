@@ -16,6 +16,9 @@ class AddCompanyIdInvestmentIdToUserTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('company_id')->unsigned()->nullable();
             $table->integer('investment_id')->unsigned()->nullable();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('investment_id')->references('id')->on('investments')->onDelete('cascade');
         });
     }
 

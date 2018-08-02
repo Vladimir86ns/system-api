@@ -43,11 +43,18 @@ Route::group([ 'prefix' => 'investor'], function () {
     Route::group(['middleware' => ['check-investor']], function () {
         Route::get('/dashboard', 'InvestorUserController@dashboard');
         Route::get('/get-all/{country}', 'InvestorController@getAllFromCountry');
+        Route::get('/{country}/get-all-and-selected/{id}', 'InvestorController@getAllAndSelected');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'InvestorUserController@getSignIn');
     Route::post('/sign-up', 'InvestorUserController@signUp');
     Route::post('/sign-in', 'InvestorUserController@signIn');
+});
+
+//  INVESTMENT
+Route::group([ 'prefix' => 'investment'], function () {
+    // WITH MIDDLEWARE
+    Route::post('/invest/{id}', 'InvestmentController@invest');
 });
 
 //  EMPLOYEE

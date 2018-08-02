@@ -35,9 +35,9 @@
 @include('investor.component.all-investments.all_investments_table')
 
 {{-- DISPLAY SELECTED INVESTMENT --}}
-{{-- @if($transformedInvestment)
-  @include('investor.show.single.investition')
-  @include('investor.show.single.chart')
-@endIF --}}
+@if(!empty($transformedSingleInvestment))
+  @include('investor.component.single-investment.single_investment_table')
+  {{-- @include('investor.show.single.chart') --}}
+@endIF
 
 @stop

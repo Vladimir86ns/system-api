@@ -64,7 +64,6 @@ class InvestorUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-
             return view('investor.pages.dashboard');
         }
 
