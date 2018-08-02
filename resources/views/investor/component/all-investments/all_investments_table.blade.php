@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($transformedInvestments['data'] as $investment)
+              @foreach ($transformedAllInvestments['data'] as $investment)
                 @if(!$investment['closed'])
                 <tr>
                   <td>{{ $investment['name'] }}</td>
@@ -37,7 +37,7 @@
                   <td class="numeric">{{ $investment['collected_to_date'] }}</td>
                   <td class="numeric">{{ $investment['closed'] ? 'Yes' : 'No' }}</td>
                   <td>
-                    <a href="/investment/get-all-and-selected/{{ $investment['id'] }}">
+                    <a href="/investor/{{$investment['country']}}/get-all-and-selected/{{ $investment['id'] }}">
                       <i class="fa fa-fw fa-sign-in"></i>
                     </a>
                   </td>

@@ -35,6 +35,16 @@ class InvestorService
     }
 
     /**
+     * Get investment
+     *
+     * @param int $id
+     */
+    public function getInvestment(int $id)
+    {
+        return AdminInvestment::find($id);
+    }
+
+    /**
      * Get all investments for given country where status approved
      *
      * @param string $country
@@ -52,10 +62,20 @@ class InvestorService
      *
      * @param Collection $adminInvestments
      */
-    public function getFromTransformer(Collection $adminInvestments)
+    public function getAllFromTransformer(Collection $adminInvestments)
     {
         $result = new FractalCollection($adminInvestments, $this->adminInvestmentTransformer);
 
         return $this->fractal->createData($result)->toArray();
+    }
+
+    /**
+     * Get single investment from transformer
+     *
+     * @param AdminInvestment $adminInvestments
+     */
+    public function getSingleFromTransformer(AdminInvestment $adminInvestment)
+    {
+        return $this->adminInvestmentTransformer->transform($adminInvestment);
     }
 }

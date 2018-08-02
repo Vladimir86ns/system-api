@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Investment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email',
+        'password',
+        'last_name',
+        'first_name',
+        'permissions',
+        'address',
+        'city',
+        'company_id',
+        'postal',
     ];
 
     /**
@@ -26,4 +35,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get investments.
+    */
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

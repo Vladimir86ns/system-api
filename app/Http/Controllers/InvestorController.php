@@ -38,8 +38,27 @@ class InvestorController extends Controller
     public function getAllFromCountry($country)
     {
         $allInvestments = $this->service->getAllApprovedForGivenCountry($country);
-        $transformedInvestments = $this->service->getFromTransformer($allInvestments);
+        $transformedAllInvestments = $this->service->getAllFromTransformer($allInvestments);
 
-        return view('investor.pages.find_all_investments', compact(['transformedInvestments']));
+        return view('investor.pages.find_all_investments', compact(['transformedAllInvestments']));
+    }
+
+    /**
+     * Get all investments and selected investments
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllAndSelected($country, $id)
+    {
+        $allInvestments = $this->service->getAllApprovedForGivenCountry($country);
+        $transformedAllInvestments = $this->service->getAllFromTransformer($allInvestments);
+
+        $investment = $this->service->getInvestment($id);
+        $transformedSingleInvestment = $this->service->getSingleFromTransformer($investment);
+
+        return view(
+            'investor.pages.find_all_investments',
+            compact(['transformedAllInvestments', 'transformedSingleInvestment'])
+        );
     }
 }

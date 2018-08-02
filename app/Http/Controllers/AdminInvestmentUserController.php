@@ -97,7 +97,6 @@ class AdminInvestmentUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-
             return view('investment-admin.pages.dashboard');
         }
 
