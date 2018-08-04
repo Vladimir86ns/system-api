@@ -18,9 +18,10 @@ class CreateCompanyProductsTable extends Migration
             $table->integer('product_categories_id')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 50);
-            $table->string('size', 50);
-            $table->decimal('cost', 10, 2);
-            $table->decimal('price', 10, 2);
+            $table->string('type', 50)->nullable();
+            $table->string('size', 50)->nullable();
+            $table->decimal('cost', 10, 2)->nullable();
+            $table->decimal('price', 10, 2)->nullable();
             $table->string('picture')->nullable();
             $table->integer('time_to_prepare');
             $table->foreign('product_categories_id')->references('id')->on('product_categories');
