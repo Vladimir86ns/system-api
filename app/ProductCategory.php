@@ -8,7 +8,7 @@ class ProductCategory extends Model
 {
     protected $fillable = [
         'name',
-        'project_id',
+        'company_id',
     ];
 
     protected $casts = [
