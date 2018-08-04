@@ -20,7 +20,6 @@ class ProductController extends BaseController
 
     public function getProductCategories($id)
     {
-        \Log::info('usao');
         return $this->service->getCategories($id);
     }
 }

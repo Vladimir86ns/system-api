@@ -20,7 +20,7 @@ $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => 'api'], function (Router $api) {
         $api->post('register-company', 'CompanyUserRegisterController@register');
         $api->post('login-company', 'CompanyUserRegisterController@login');
-        $api->get('company/get-product-category/{id}', 'ProductController@getProductCategories');
+        $api->get('company/get-product-categories/{id}', 'ProductController@getProductCategories');
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
         //
