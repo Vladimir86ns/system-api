@@ -18,6 +18,12 @@ class ProductController extends BaseController
         $this->service = $companyService;
     }
 
+    /**
+     * Get all company product categories
+     *
+     * @param int $id Company ID
+     * @return ProductCategory;
+     */
     public function getProductCategories($id)
     {
         return $this->service->getCategories($id);
