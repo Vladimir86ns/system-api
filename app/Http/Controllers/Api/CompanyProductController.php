@@ -33,7 +33,7 @@ class CompanyProductController extends BaseController
      * Get all company products
      *
      * @param int $id Company ID
-     * @return ProductCategory;
+     * @return CompanyProduct;
      */
     public function getProducts($id)
     {
