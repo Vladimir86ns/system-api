@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\BaseController;
 use App\Services\Api\Company\CompanyService;
 
-class ProductController extends BaseController
+class CompanyProductController extends BaseController
 {
     /**
      * @var CompanyService
@@ -27,5 +27,16 @@ class ProductController extends BaseController
     public function getProductCategories($id)
     {
         return $this->service->getCategories($id);
+    }
+
+    /**
+     * Get all company products
+     *
+     * @param int $id Company ID
+     * @return CompanyProduct;
+     */
+    public function getProducts($id)
+    {
+        return $this->service->getAllProducts($id);
     }
 }
