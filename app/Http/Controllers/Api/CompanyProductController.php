@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use JWTAuth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Services\Api\Company\CompanyService;
 

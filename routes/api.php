@@ -25,6 +25,7 @@ $api->version('v1', function ($api) {
         $api->group([ 'prefix' => 'company'], function ($api) {
             $api->get('get-product-categories/{id}', 'CompanyProductController@getProductCategories');
             $api->get('products/{id}', 'CompanyProductController@getProducts');
+            $api->post('{id}/order', 'CompanyOrderController@order');
         });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
