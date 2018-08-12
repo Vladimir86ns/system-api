@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use JWTAuth;
+use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Services\Api\Company\OrderService;
@@ -42,5 +43,16 @@ class CompanyOrderController extends BaseController
         $this->validator->validateProducts($company->id, $orderIds);
 
         return $this->service->saveOrder($orderIds, $company);
+    }
+
+    /**
+     * Save company un delivered orders
+     *
+     * @param int $id Company ID
+     * @return Order;
+     */
+    public function getOrders($id)
+    {
+        return Order::where('company_id', $id)->whereNull('time_delivered')->get();
     }
 }
