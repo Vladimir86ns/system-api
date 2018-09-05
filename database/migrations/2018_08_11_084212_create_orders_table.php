@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->text('order_items');
             $table->integer('time_to_finish')->nullable();
             $table->integer('to_deliver')->default(false);
+            $table->integer('order_done')->default(false);
             $table->string('city', 50)->nullable();
             $table->string('address', 50)->nullable();
             $table->integer('delivery_boy_id')->unsigned()->nullable();

@@ -53,6 +53,6 @@ class CompanyOrderController extends BaseController
      */
     public function getOrders($id)
     {
-        return Order::where('company_id', $id)->whereNull('time_delivered')->get();
+        return Order::where('company_id', $id)->where('order_done', 0)->get();
     }
 }
