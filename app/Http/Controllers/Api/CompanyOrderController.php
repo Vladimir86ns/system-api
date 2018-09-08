@@ -55,4 +55,17 @@ class CompanyOrderController extends BaseController
     {
         return Order::where('company_id', $id)->where('order_done', 0)->get();
     }
+
+    /**
+     * Update order to done when all items are finished
+     *
+     * @param int $id Company ID
+     * @param int $orderId Order ID
+     * @return Order;
+     */
+    public function orderIsDone($id, $orderId)
+    {
+        $order = Order::find($orderId);
+        return $order->update(['order_done' => 1]);
+    }
 }

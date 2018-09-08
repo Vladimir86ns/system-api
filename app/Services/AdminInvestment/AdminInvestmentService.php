@@ -165,8 +165,7 @@ class AdminInvestmentService
             return false;
         }
 
-        $attributes['total_amount'] = $investmentsAdmin->total_investition;
-        $attributes['expense'] = $investmentsAdmin->total_investition;
+        $attributes['total_amount_investment'] = $investmentsAdmin->total_investition;
 
         $investmentsAdmin->companies()->create($attributes);
         $investmentsAdmin->on_production = true;

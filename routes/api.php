@@ -27,6 +27,7 @@ $api->version('v1', function ($api) {
             $api->get('products/{id}', 'CompanyProductController@getProducts');
             $api->post('{id}/order', 'CompanyOrderController@order');
             $api->get('{id}/get-orders', 'CompanyOrderController@getOrders');
+            $api->post('{id}/order/{orderId}', 'CompanyOrderController@orderIsDone');
         });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {

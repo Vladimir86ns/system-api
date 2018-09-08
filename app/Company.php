@@ -8,9 +8,9 @@ class Company extends Model
 {
     protected $fillable = [
         'name',
-        'total_amount',
+        'total_amount_investment',
         'income',
-        'expense',
+        'monthly_expense',
         'profit',
         'profit_sharing',
         'investment_collected',
