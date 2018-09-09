@@ -17,9 +17,9 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->decimal('total_amount_investment', 10, 2)->default(0);
-            $table->decimal('income', 10, 2)->default(0);
+            $table->decimal('monthly_income', 10, 2)->default(0);
             $table->text('monthly_expense');
-            $table->decimal('profit', 10, 2)->default(0);
+            $table->decimal('monthly_profit', 10, 2)->default(0);
             $table->decimal('profit_sharing', 10, 2)->default(0);
             $table->decimal('investment_collected', 10, 2)->default(0);
             $table->string('phone_number')->nullable();

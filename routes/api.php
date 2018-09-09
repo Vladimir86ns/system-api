@@ -29,7 +29,7 @@ $api->version('v1', function ($api) {
             $api->get('{id}/get-orders', 'CompanyOrderController@getOrders');
             $api->get('{id}/get-done-orders', 'CompanyOrderController@getOrdersStatusDone');
             $api->post('{id}/order-done/{orderId}', 'CompanyOrderController@orderIsDone');
-            $api->post('{id}/order-close/{orderId}', 'CompanyOrderController@orderIsClose');
+        $api->post('{id}/order-close/{orderId}', 'CompanyOrderController@orderIsClose');
         });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
