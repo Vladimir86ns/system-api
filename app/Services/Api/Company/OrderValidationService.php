@@ -36,7 +36,7 @@ class OrderValidationService
             return $company;
         }
 
-        abort(404, "Order ID: {$id} is invalid!");
+        abort(404, "Company ID: {$id} is invalid!");
     }
 
     /**
