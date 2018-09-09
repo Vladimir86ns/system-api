@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check-admin-investments' => \App\Http\Middleware\CheckAdminInvestment::class,
         'check-investor' => \App\Http\Middleware\CheckInvestor::class,
+        'check-owner' => \App\Http\Middleware\CheckOwner::class,
     ];
 }

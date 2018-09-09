@@ -51,6 +51,18 @@ Route::group([ 'prefix' => 'investor'], function () {
     Route::post('/sign-in', 'InvestorUserController@signIn');
 });
 
+//  OWNER  COMPANY
+Route::group([ 'prefix' => 'owner'], function () {
+    // WITH MIDDLEWARE
+    Route::group(['middleware' => ['check-owner']], function () {
+        Route::get('/dashboard', 'OwnerUserController@dashboard');
+    });
+    // WITHOUT MIDDLEWARE
+    Route::get('/login', 'OwnerUserController@getSignIn');
+    Route::post('/sign-up', 'OwnerUserController@signUp');
+    Route::post('/sign-in', 'OwnerUserController@signIn');
+});
+
 //  INVESTMENT
 Route::group([ 'prefix' => 'investment'], function () {
     // WITH MIDDLEWARE
@@ -62,13 +74,6 @@ Route::group([ 'prefix' => 'employee'], function () {
 
     // WITHOUT MIDDLEWARE
     Route::get('login', 'EmployeeController@getSignIn')->name('employee-login');
-});
-
-//  COMPANY
-Route::group([ 'prefix' => 'owner'], function () {
-
-    // WITHOUT MIDDLEWARE
-    Route::get('login', 'OwnerController@getSignIn')->name('owner-login');
 });
 
 Route::get('logout', 'AuthController@getLogout');
