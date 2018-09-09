@@ -54,7 +54,9 @@ class CompanyOrderController extends BaseController
      */
     public function getOrders($id)
     {
-        return Order::where('company_id', $id)->where('order_done', 0)->get();
+        $this->validator->validateCompany($id);
+
+        return $this->service->getAllCompanyOrdersInProgress($id);
     }
 
     /**
@@ -65,10 +67,9 @@ class CompanyOrderController extends BaseController
      */
     public function getOrdersStatusDone($id)
     {
-        return Order::where('company_id', $id)
-                ->where('order_done', 1)
-                ->whereNull('time_delivered')
-                ->get();
+        $this->validator->validateCompany($id);
+
+        return $this->service->getAllOrdersStatusDone($id);
     }
 
     /**
@@ -78,16 +79,12 @@ class CompanyOrderController extends BaseController
      * @param int $orderId Order ID
      * @return Order;
      */
-    public function orderIsDone($id, $orderId)
+    public function orderIsDone(int $id, int $orderId)
     {
-        $order = Order::where([
-                ['id', $orderId],
-                ['company_id', $id]
-            ])->first();
+        $this->validator->validateCompany($id);
+        $order = $this->validator->validateOrderByIdAndCompanyId($orderId, $id);
 
-        $order->update(['order_done' => 1]);
-
-        return $order;
+        return $this->service->updateOrderToDone($order);
     }
 
     /**
@@ -99,13 +96,9 @@ class CompanyOrderController extends BaseController
      */
     public function orderIsClose($id, $orderId)
     {
-        $order = Order::where([
-                ['id', $orderId],
-                ['company_id', $id]
-            ])->first();
+        $company = $this->validator->validateCompany($id);
+        $order = $this->validator->validateOrderByIdAndCompanyId($orderId, $id);
 
-        $order->update(['time_delivered' => Carbon::now()->format('Y-m-d H:i:s')]);
-
-        return $order;
+        return $this->service->closeOrder($order, $company);
     }
 }
