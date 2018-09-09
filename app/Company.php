@@ -19,10 +19,6 @@ class Company extends Model
         'owner_id',
     ];
 
-    protected $casts = [
-        'investment_collected' => 'boolean',
-    ];
-
     /**
      * Get the owner of projects.
      */

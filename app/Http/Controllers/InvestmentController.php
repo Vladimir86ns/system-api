@@ -40,11 +40,13 @@ class InvestmentController extends Controller
 
         $error = $this->validationService->validateInvest($attributes['total_investment'], $id);
 
+        $company = $this->validationService->getAndValidateCompany($id);
+
         if ($error) {
             return Redirect::back()->with('error', $error['total_investment']);
         }
 
-        $investment = $this->service->updateInvestment($id, $attributes);
+        $investment = $this->service->updateInvestment($id, $attributes, $company);
 
         $formated = number_format($attributes['total_investment'], 2);
 

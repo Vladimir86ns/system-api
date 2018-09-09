@@ -47,4 +47,35 @@ class InvestmentValidationService
 
         return $error;
     }
+
+    /**
+     * Validate Company exist
+     *
+     * @param int $id Company ID
+     * @return \Company
+     */
+    public function getAndValidateCompany(int $id)
+    {
+        $this->validateId($id);
+
+        $company = $this->investmentService->getCompany($id);
+
+        if ($company) {
+            return $company;
+        }
+
+        abort(404, "Company ID: {$id} is invalid!");
+    }
+
+    /**
+     * Validate id is integer
+     *
+     * @param int $id
+     */
+    private function validateId($id)
+    {
+        if (!is_int($id)) {
+            abort(404, "Id must be a number!");
+        }
+    }
 }

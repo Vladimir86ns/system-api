@@ -4,6 +4,7 @@ namespace App\Services\Investment;
 
 use App\User;
 use Sentinel;
+use App\Company;
 use App\Investment;
 use App\AdminInvestment;
 use App\Transformers\AdminInvestment\AdminInvestmentTransformer;
@@ -37,19 +38,22 @@ class InvestmentService
     }
 
     /**
-     * Update investment and investition data for investment
+     * Update investment, company and investition data for investment
      *
      * @param int $id
      * @param array $attributes
      *
      * @return
      */
-    public function updateInvestment(int $id, array $attributes)
+    public function updateInvestment(int $id, array $attributes, Company $company)
     {
         $investment = $this->getInvestment($id);
         $investment->collected_to_date += $attributes['total_investment'];
         $investment->closed = $investment->total_investition == $investment->collected_to_date;
         $investment->update();
+
+        // update company
+        $company->update(['investment_collected' => $investment->collected_to_date]);
 
         // update user investition
         $this->updateUserInvestmentData($id, $attributes, $investment);
@@ -122,5 +126,16 @@ class InvestmentService
     private function getUser()
     {
         return User::find(Sentinel::getUser()->id);
+    }
+
+    /**
+     * Get company by id
+     *
+     * @param int $companyId CompanyID
+     * @return Company
+     */
+    public function getCompany(int $companyId)
+    {
+        return Company::find($companyId);
     }
 }
