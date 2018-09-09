@@ -1,4 +1,5 @@
 <ul id="menu" class="page-sidebar-menu">
+
   <!-- DASHBOARD -->
   <li {!! (Request::is('dashboard') ? 'class="active"' : '') !!}>
     <a href="#">
@@ -8,30 +9,48 @@
     </a>
   </li>
 
-  <!-- FIND INVESTMENT -->
-  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
-    <a href="#">
-      <i class="livicon" data-name="rocket" data-size="18" data-c="#418BCA" data-hc="#418BCA"
-      data-loop="true"></i>
-      <span class="title">Find Investment</span>
-      <span class="fa arrow"></span>
-    </a>
-    <ul class="sub-menu">
-      <li>
-        <a href="#">
-          <i class="fa fa-angle-double-right"></i>
-          Serbia
-        </a>
-      </li>
-    </ul>
-  </li>
-
-  <!-- FIND INVESTMENT -->
+  <!-- ADD PRODUCT CATEGORY -->
   <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
     <a href="#">
       <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
       data-loop="true"></i>
-      <span class="title">My Investment</span>
+      <span class="title">Add Product Category</span>
+    </a>
+  </li>
+
+  <!-- ADD EMPLOYEE -->
+  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+      <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+      data-loop="true"></i>
+      <span class="title">Add Employee</span>
+    </a>
+  </li>
+
+  <!-- ALL EMPLOYEES -->
+  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+      <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+      data-loop="true"></i>
+      <span class="title">All Employees</span>
+    </a>
+  </li>
+
+  <!-- ALL PRODUCTS -->
+  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+      <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+      data-loop="true"></i>
+      <span class="title">All Products</span>
+    </a>
+  </li>
+
+  <!-- ADD NEW PRODUCT -->
+  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+      <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+      data-loop="true"></i>
+      <span class="title">Add New Product</span>
     </a>
   </li>
 
