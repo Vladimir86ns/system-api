@@ -73,13 +73,21 @@ class InvestmentService
     public function updateUserInvestmentData(
         int $id,
         array &$attributes,
-        AdminInvestment $investment
+        AdminInvestment $adminInvestment
     ) {
+
         $investment = $this->findInvestmentIfAlreadyHave($id);
 
         // if user has this investment just update it
         if ($investment) {
             $investment->total_investment += $attributes['total_investment'];
+
+            // save percentage
+            $investment->percent_of_income = $this->getPercentage(
+                $investment->total_investment,
+                $adminInvestment->total_investition
+            );
+
             $investment->update();
 
             return;
@@ -88,7 +96,13 @@ class InvestmentService
         $newInvestment = $this->findAdminSelectedToInvest($id);
 
         $user = $this->getUser();
+
+        // append company id and percentage
         $attributes['company_id'] = $newInvestment->id;
+        $attributes['percent_of_income'] = $this->getPercentage(
+            $attributes['total_investment'],
+            $adminInvestment->total_investition
+        );
 
         $user->investments()->create($attributes);
     }
@@ -137,5 +151,17 @@ class InvestmentService
     public function getCompany(int $companyId)
     {
         return Company::find($companyId);
+    }
+
+    /**
+     * Get percentage how much for investition.
+     *
+     * @param float $investedAmount
+     * @param float $totalAmount
+     * @return float
+     */
+    private function getPercentage(float $investedAmount, float $totalAmount)
+    {
+        return $investedAmount / $totalAmount * 100;
     }
 }
