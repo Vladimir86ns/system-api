@@ -46,7 +46,7 @@ class InvestmentController extends Controller
             return Redirect::back()->with('error', $error['total_investment']);
         }
 
-        $investment = $this->service->updateInvestment($id, $attributes, $company);
+        $investment = $this->service->invest($id, $attributes, $company);
 
         $formated = number_format($attributes['total_investment'], 2);
 

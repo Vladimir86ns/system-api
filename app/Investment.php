@@ -16,6 +16,7 @@ class Investment extends Model
         'monthly_collected',
         'investment_collected',
         'company_id',
+        'admin_investment_id'
     ];
 
     protected $casts = [
@@ -36,5 +37,13 @@ class Investment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the user that owns the investment.
+     */
+    public function adminInvestment()
+    {
+        return $this->belongsTo(AdminInvestment::class);
     }
 }

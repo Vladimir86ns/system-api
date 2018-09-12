@@ -38,45 +38,37 @@ class InvestmentService
     }
 
     /**
-     * Update investment, company and investition data for investment
+     * Create or update investment if already has, and
+     * update admin investment,company for investment.
      *
-     * @param int $id
+     * @param int $id AdminInvestmentID
      * @param array $attributes
      *
      * @return
      */
-    public function updateInvestment(int $id, array $attributes, Company $company)
+    public function invest(int $id, array $attributes, Company $company)
     {
-        $investment = $this->getInvestment($id);
-        $investment->collected_to_date += $attributes['total_investment'];
-        $investment->closed = $investment->total_investition == $investment->collected_to_date;
-        $investment->update();
+        $adminInvestment = $this->updateAdminInvestment($id, $attributes);
+        $this->updateCompanyInvestmentCollected($company, $adminInvestment);
+        $this->updateOrCreateUserInvestment($attributes, $adminInvestment);
 
-        // update company
-        $company->update(['investment_collected' => $investment->collected_to_date]);
-
-        // update user investition
-        $this->updateUserInvestmentData($id, $attributes, $investment);
-
-        return $this->adminInvestmentTransformer->transform($this->getInvestment($id));
+        return $this->adminInvestmentTransformer->transform($adminInvestment);
     }
 
     /**
-     * Update also and user investition data
+     * Update or create user investments, update admin investment
+     * and company collected investment.
      *
-     * @param int $id
      * @param array $attributes
      * @param AdminInvestment $investment
      *
      * @return
      */
-    public function updateUserInvestmentData(
-        int $id,
+    public function updateOrCreateUserInvestment(
         array &$attributes,
         AdminInvestment $adminInvestment
     ) {
-
-        $investment = $this->findInvestmentIfAlreadyHave($id);
+        $investment = $this->findInvestmentIfAlreadyHave($adminInvestment->id);
 
         // if user has this investment just update it
         if ($investment) {
@@ -88,21 +80,11 @@ class InvestmentService
                 $adminInvestment->total_investition
             );
 
-            $investment->update();
-
-            return;
+            return $investment->update();
         }
 
-        $newInvestment = $this->findAdminSelectedToInvest($id);
-
+        $attributes = $this->prepareAttributes($attributes, $adminInvestment);
         $user = $this->getUser();
-
-        // append company id and percentage
-        $attributes['company_id'] = $newInvestment->id;
-        $attributes['percent_of_income'] = $this->getPercentage(
-            $attributes['total_investment'],
-            $adminInvestment->total_investition
-        );
 
         $user->investments()->create($attributes);
     }
@@ -110,26 +92,15 @@ class InvestmentService
     /**
      * Find investition if already have
      *
-     * @param int $id
+     * @param int $id AdminInvestmentID
      *
      * @return Investment
      */
-    public function findInvestmentIfAlreadyHave($id)
+    public function findInvestmentIfAlreadyHave($adminInvestmentId)
     {
-        $user = $this->getUser();
-        return Investment::where('id', $id)->where('user_id', $user->id)->first();
-    }
-
-    /**
-     * Find admin investition where want to invest
-     *
-     * @param int $id
-     *
-     * @return AdminInvestment
-     */
-    private function findAdminSelectedToInvest($id)
-    {
-        return AdminInvestment::where('id', $id)->first();
+        return Investment::where('admin_investment_id', $adminInvestmentId)
+            ->where('user_id', $this->getUser()->id)
+            ->first();
     }
 
     /**
@@ -163,5 +134,52 @@ class InvestmentService
     private function getPercentage(float $investedAmount, float $totalAmount)
     {
         return $investedAmount / $totalAmount * 100;
+    }
+
+    /**
+     * Append attributes for investition.
+     *
+     * @param array $attributes
+     * @param AdminInvestment $adminInvestment
+     * @return array
+     */
+    private function prepareAttributes(array &$attributes, AdminInvestment $adminInvestment)
+    {
+        $attributes['company_id'] = $adminInvestment->companies->id;
+        $attributes['admin_investment_id'] = $adminInvestment->id;
+        $attributes['percent_of_income'] = $this->getPercentage(
+            $attributes['total_investment'],
+            $adminInvestment->total_investition
+        );
+
+        return $attributes;
+    }
+
+    /**
+     * Update admin investment.
+     *
+     * @param int $adminInvestmentId
+     * @param array $attributes
+     * @return AdminInvestment
+     */
+    private function updateAdminInvestment(int $adminInvestmentId, array $attributes)
+    {
+        $adminInvestment = $this->getInvestment($adminInvestmentId);
+        $adminInvestment->collected_to_date += $attributes['total_investment'];
+        $adminInvestment->closed = $adminInvestment->total_investition == $adminInvestment->collected_to_date;
+        $adminInvestment->update();
+
+        return $adminInvestment;
+    }
+
+    /**
+     * Update company investment collected.
+     *
+     * @param Company $company
+     * @param AdminInvestment $adminInvestment
+     */
+    private function updateCompanyInvestmentCollected(Company $company, AdminInvestment $adminInvestment)
+    {
+        $company->update(['investment_collected' => $adminInvestment->collected_to_date]);
     }
 }
