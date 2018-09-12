@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Investor\InvestorService;
-use App\Services\Investor\InvestorValidationService;
 use League\Fractal\Manager as FractalManager;
+use App\Services\Investor\InvestorValidationService;
+use App\Transformers\Investor\InvestmentTransformer;
+use League\Fractal\Resource\Collection as FractalCollection;
 
 class InvestorController extends Controller
 {
@@ -20,6 +22,11 @@ class InvestorController extends Controller
     protected $service;
 
     /**
+     * @var InvestmentTransformer
+     */
+    protected $transform;
+
+    /**
      * @var FractalManager
      */
     protected $fractal;
@@ -30,15 +37,18 @@ class InvestorController extends Controller
      * @param InvestorValidationService $investorValidationService
      * @param InvestorService $investorService
      * @param FractalManager $fractal
+     * @param InvestmentTransformer $investmentTransformer
      */
     public function __construct(
         InvestorValidationService $investorValidationService,
         InvestorService $investorService,
-        FractalManager $fractal
+        FractalManager $fractal,
+        InvestmentTransformer $investmentTransformer
     ) {
         $this->validationService = $investorValidationService;
         $this->service = $investorService;
         $this->fractal = $fractal;
+        $this->transform = $investmentTransformer;
     }
 
     /**
@@ -73,14 +83,15 @@ class InvestorController extends Controller
         );
     }
 
-    public function  getUserInvestments()
+    public function getUserInvestments()
     {
-      $allUserInvestments = $this->service->findAllUserInvestments();
+        $allUserInvestments = $this->service->findAllUserInvestments();
 
-      return view('investor.pages.user_investments', compact([
-        'transformedAdminInvestments',
-        'transformedInvestment',
-        'pie'
-      ]));
+        $result = new FractalCollection($allUserInvestments, $this->transform);
+        $transformedUserInvestment =  $this->fractal->createData($result)->toArray();
+
+        return view('investor.pages.user_investments', compact([
+            'transformedUserInvestment'
+        ]));
     }
 }
