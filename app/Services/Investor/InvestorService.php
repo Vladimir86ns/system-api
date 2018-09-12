@@ -2,10 +2,12 @@
 
 namespace App\Services\Investor;
 
+use App\Investment;
 use App\AdminInvestment;
+use Sentinel;
 use Illuminate\Database\Eloquent\Collection;
-use League\Fractal\Resource\Collection as FractalCollection;
 use League\Fractal\Manager as FractalManager;
+use League\Fractal\Resource\Collection as FractalCollection;
 use App\Transformers\AdminInvestment\AdminInvestmentTransformer;
 
 class InvestorService
@@ -77,5 +79,19 @@ class InvestorService
     public function getSingleFromTransformer(AdminInvestment $adminInvestment)
     {
         return $this->adminInvestmentTransformer->transform($adminInvestment);
+    }
+
+    /**
+     * Find user all investments
+     *
+     * @param int $id
+     *
+     * @return Investment
+     */
+    public function findAllUserInvestments()
+    {
+        $user = Sentinel::getUser();
+
+        return Investment::where('user_id', $user->id)->get();
     }
 }

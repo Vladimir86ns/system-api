@@ -44,6 +44,7 @@ Route::group([ 'prefix' => 'investor'], function () {
         Route::get('/dashboard', 'InvestorUserController@dashboard');
         Route::get('/get-all/{country}', 'InvestorController@getAllFromCountry');
         Route::get('/{country}/get-all-and-selected/{id}', 'InvestorController@getAllAndSelected');
+        Route::get('/get-user-investments', 'InvestorController@getUserInvestments');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'InvestorUserController@getSignIn');

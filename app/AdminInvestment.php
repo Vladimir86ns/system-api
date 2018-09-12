@@ -29,4 +29,9 @@ class AdminInvestment extends Model
     {
         return $this->hasOne(Company::class);
     }
+
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

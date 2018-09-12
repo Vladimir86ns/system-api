@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\Investor\InvestorService;
 use App\Services\Investor\InvestorValidationService;
+use League\Fractal\Manager as FractalManager;
 
 class InvestorController extends Controller
 {
@@ -19,15 +20,25 @@ class InvestorController extends Controller
     protected $service;
 
     /**
+     * @var FractalManager
+     */
+    protected $fractal;
+
+    /**
      * InvestmentController
      *
+     * @param InvestorValidationService $investorValidationService
+     * @param InvestorService $investorService
+     * @param FractalManager $fractal
      */
     public function __construct(
         InvestorValidationService $investorValidationService,
-        InvestorService $investorService
+        InvestorService $investorService,
+        FractalManager $fractal
     ) {
         $this->validationService = $investorValidationService;
         $this->service = $investorService;
+        $this->fractal = $fractal;
     }
 
     /**
@@ -60,5 +71,16 @@ class InvestorController extends Controller
             'investor.pages.find_all_investments',
             compact(['transformedAllInvestments', 'transformedSingleInvestment'])
         );
+    }
+
+    public function  getUserInvestments()
+    {
+      $allUserInvestments = $this->service->findAllUserInvestments();
+
+      return view('investor.pages.user_investments', compact([
+        'transformedAdminInvestments',
+        'transformedInvestment',
+        'pie'
+      ]));
     }
 }

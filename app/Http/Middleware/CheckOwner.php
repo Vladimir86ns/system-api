@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Sentinel;
 
-class ChechOwner
+class CheckOwner
 {
     const ROUTE = '/';
 

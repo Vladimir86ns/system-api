@@ -40,23 +40,23 @@ class InvestmentService
     /**
      * Update investment, company and investition data for investment
      *
-     * @param int $id
+     * @param int $id AdminInvestmentID
      * @param array $attributes
      *
      * @return
      */
     public function updateInvestment(int $id, array $attributes, Company $company)
     {
-        $investment = $this->getInvestment($id);
-        $investment->collected_to_date += $attributes['total_investment'];
-        $investment->closed = $investment->total_investition == $investment->collected_to_date;
-        $investment->update();
+        $adminInvestment = $this->getInvestment($id);
+        $adminInvestment->collected_to_date += $attributes['total_investment'];
+        $adminInvestment->closed = $adminInvestment->total_investition == $adminInvestment->collected_to_date;
+        $adminInvestment->update();
 
         // update company
-        $company->update(['investment_collected' => $investment->collected_to_date]);
+        $company->update(['investment_collected' => $adminInvestment->collected_to_date]);
 
         // update user investition
-        $this->updateUserInvestmentData($id, $attributes, $investment);
+        $this->updateUserInvestmentData($id, $attributes, $adminInvestment);
 
         return $this->adminInvestmentTransformer->transform($this->getInvestment($id));
     }
@@ -75,8 +75,7 @@ class InvestmentService
         array &$attributes,
         AdminInvestment $adminInvestment
     ) {
-
-        $investment = $this->findInvestmentIfAlreadyHave($id);
+        $investment = $this->findInvestmentIfAlreadyHave($adminInvestment->id);
 
         // if user has this investment just update it
         if ($investment) {
@@ -93,12 +92,12 @@ class InvestmentService
             return;
         }
 
-        $newInvestment = $this->findAdminSelectedToInvest($id);
 
         $user = $this->getUser();
 
         // append company id and percentage
-        $attributes['company_id'] = $newInvestment->id;
+        $attributes['company_id'] = $adminInvestment->companies->id;
+        $attributes['admin_investment_id'] = $adminInvestment->id;
         $attributes['percent_of_income'] = $this->getPercentage(
             $attributes['total_investment'],
             $adminInvestment->total_investition
@@ -110,14 +109,16 @@ class InvestmentService
     /**
      * Find investition if already have
      *
-     * @param int $id
+     * @param int $id AdminInvestmentID
      *
      * @return Investment
      */
-    public function findInvestmentIfAlreadyHave($id)
+    public function findInvestmentIfAlreadyHave($adminInvestmentId)
     {
         $user = $this->getUser();
-        return Investment::where('id', $id)->where('user_id', $user->id)->first();
+        return Investment::where('admin_investment_id', $adminInvestmentId)
+            ->where('user_id', $user->id)
+            ->first();
     }
 
     /**

@@ -15,6 +15,7 @@ class CreateInvestmentsTable extends Migration
     {
         Schema::create('investments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('admin_investment_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->decimal('total_investment', 10, 2)->unsigned()->nullable();
             $table->decimal('percent_of_income', 10, 2)->unsigned()->nullable();
@@ -22,6 +23,8 @@ class CreateInvestmentsTable extends Migration
             $table->decimal('monthly_collected', 10, 2)->unsigned()->nullable();
             $table->boolean('investment_collected')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
+
+            $table->foreign('admin_investment_id')->references('id')->on('admin_investments');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
