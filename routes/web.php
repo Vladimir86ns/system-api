@@ -33,8 +33,8 @@ Route::group([ 'prefix' => 'investment-admin'], function () {
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'AdminInvestmentUserController@getSignIn');
-    Route::post('/sign-up', 'AdminInvestmentUserController@signUp');
     Route::post('/sign-in', 'AdminInvestmentUserController@signIn');
+    Route::post('/sign-up', 'AdminInvestmentUserController@signUp');
 });
 
 //  INVESTOR
@@ -48,8 +48,8 @@ Route::group([ 'prefix' => 'investor'], function () {
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'InvestorUserController@getSignIn');
-    Route::post('/sign-up', 'InvestorUserController@signUp');
     Route::post('/sign-in', 'InvestorUserController@signIn');
+    Route::post('/sign-up', 'InvestorUserController@signUp');
 });
 
 //  OWNER  COMPANY

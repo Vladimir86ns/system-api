@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Sentinel;
+use App\User;
 
 class CheckAdminInvestment
 {
@@ -22,13 +23,17 @@ class CheckAdminInvestment
             return redirect(self::ROUTE);
         }
 
-        $permissions = Sentinel::getUser()->permissions;
+        // from Sentinel get user I could get permission even
+        // there is array with permission. That is why i then find
+        // user by id. And then it is possible to see permission.
+        $user = User::find(Sentinel::getUser()->id);
+        $permission = json_decode($user->permissions, true);
 
-        if (empty($permissions['admin-investment'])) {
-            return redirect(self::ROUTE);
+        if (empty($permission['admin-investment'])) {
+            return redirect(self::ROUTE)->with('error', 'Your have to be Admin Investor!');
         }
 
-        if ($permissions['admin-investment'] == 1) {
+        if ($permission['admin-investment'] == 1) {
             return $next($request);
         }
 

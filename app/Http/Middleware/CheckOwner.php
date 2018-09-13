@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\User;
 use Sentinel;
 
 class CheckOwner
@@ -18,17 +19,22 @@ class CheckOwner
      */
     public function handle($request, Closure $next)
     {
+
         if (!Sentinel::getUser()) {
             return redirect(self::ROUTE);
         }
 
-        $permissions = Sentinel::getUser()->permissions;
+        // from Sentinel get user I could get permission even
+        // there is array with permission. That is why i then find
+        // user by id. And then it is possible to see permission.
+        $user = User::find(Sentinel::getUser()->id);
+        $permission = json_decode($user->permissions, true);
 
-        if (empty($permissions['owner'])) {
-            return redirect(self::ROUTE);
+        if (empty($permission['owner'])) {
+            return redirect(self::ROUTE)->with('error', 'Your have to be Owner!');;
         }
 
-        if ($permissions['owner'] == 1) {
+        if ($permission['owner'] == 1) {
             return $next($request);
         }
 
