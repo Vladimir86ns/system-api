@@ -31,7 +31,7 @@ class CheckInvestor
         $permission = json_decode($user->permissions, true);
 
         if (empty($permission['investor'])) {
-            return redirect(self::ROUTE)->with('error', 'Your have to be Investor!');;
+            return redirect(self::ROUTE)->with('error', 'Your have to be Investor!');
         }
 
         if ($permission['investor'] == 1) {

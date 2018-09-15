@@ -1,8 +1,13 @@
 <?php
 
+namespace Database\Seeds;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+ */
 class UsersTableCustomSeeder extends Seeder
 {
     // OWNERS EMAIL
@@ -27,7 +32,7 @@ class UsersTableCustomSeeder extends Seeder
         $permissions = [
             'admin-investment' => 1,
         ];
-        $user = Sentinel::registerAndActivate([
+        Sentinel::registerAndActivate([
             'first_name' => 'Vladimir',
             'last_name' => 'Grujin',
             'email' => 'vladimirInvestments@gmail.com',

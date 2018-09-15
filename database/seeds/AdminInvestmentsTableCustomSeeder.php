@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds;
+
 use App\AdminInvestment;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

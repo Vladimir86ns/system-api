@@ -58,7 +58,6 @@ class InvestorController extends Controller
         $this->fractal = $fractal;
         $this->transform = $investmentTransformer;
         $this->vgSystemService = $vgSystemService;
-
     }
 
     /**
@@ -74,7 +73,8 @@ class InvestorController extends Controller
 
         return view(
             'investor.pages.find_all_investments',
-            compact(['transformedAllInvestments', 'transformedVgSystem']));
+            compact(['transformedAllInvestments', 'transformedVgSystem'])
+        );
     }
 
     /**

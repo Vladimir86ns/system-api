@@ -1,8 +1,13 @@
 <?php
 
+namespace Database\Seeds;
+
 use App\Company;
 use Illuminate\Database\Seeder;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+ */
 class CompanyCategoriesTableCustomSeeder extends Seeder
 {
     /**

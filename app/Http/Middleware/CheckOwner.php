@@ -31,7 +31,7 @@ class CheckOwner
         $permission = json_decode($user->permissions, true);
 
         if (empty($permission['owner'])) {
-            return redirect(self::ROUTE)->with('error', 'Your have to be Owner!');;
+            return redirect(self::ROUTE)->with('error', 'Your have to be Owner!');
         }
 
         if ($permission['owner'] == 1) {
