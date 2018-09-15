@@ -44,6 +44,14 @@ class User extends Authenticatable
         return $this->hasMany(Investment::class);
     }
 
+    /**
+     * Get the phone record associated with the user.
+     */
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'owner_id');
+    }
+
 
     /**
      * Get investor.
