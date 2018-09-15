@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace database\seeds;
 
 use App\User;
 use App\AdminInvestment;

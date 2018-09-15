@@ -1,8 +1,9 @@
 <?php
 
-namespace Database\Seeds;
+namespace database\seeds;
 
 use Illuminate\Database\Seeder;
+use Sentinel;
 use Illuminate\Support\Facades\DB;
 
 /**

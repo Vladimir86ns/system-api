@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeds;
+namespace database\seeds;
 
 use App\AdminInvestment;
 use Illuminate\Database\Seeder;

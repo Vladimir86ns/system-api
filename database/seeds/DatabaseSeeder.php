@@ -1,18 +1,24 @@
 <?php
-namespace Database\Seeds;
 
-use UsersTableSeeder;
 use Illuminate\Database\Seeder;
-
+use database\seeds\UsersTableCustomSeeder;
+use database\seeds\CompanyTableCustomSeeder;
+use database\seeds\VgSystemTableCustomSeeder;
+use database\seeds\AdminInvestmentsTableCustomSeeder;
+use database\seeds\CompanyCategoriesTableCustomSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableCustomSeeder::class);
+        $this->call(AdminInvestmentsTableCustomSeeder::class);
+        $this->call(CompanyTableCustomSeeder::class);
+        $this->call(CompanyCategoriesTableCustomSeeder::class);
+        $this->call(VgSystemTableCustomSeeder::class);
     }
 }
