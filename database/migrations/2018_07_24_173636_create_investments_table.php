@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Migrations;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,7 +20,7 @@ class CreateInvestmentsTable extends Migration
             $table->integer('admin_investment_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->decimal('total_investment', 10, 2)->unsigned()->nullable();
-            $table->decimal('percent_of_income', 10, 2)->unsigned()->nullable();
+            $table->decimal('percentage', 10, 2)->unsigned()->nullable();
             $table->decimal('investment_collected_total', 10, 2)->unsigned()->nullable();
             $table->decimal('monthly_collected', 10, 2)->unsigned()->nullable();
             $table->boolean('investment_collected')->unsigned()->nullable();

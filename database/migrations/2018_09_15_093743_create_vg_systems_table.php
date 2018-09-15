@@ -1,11 +1,12 @@
 <?php
+
 namespace Database\Migrations;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesTable extends Migration
+class CreateVgSystemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +15,11 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('vg_systems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filename');
-            $table->string('mime');
+            $table->decimal('total_investitions', 10, 2)->default(0);
+            $table->decimal('collected_to_date', 10, 2)->default(0);
+            $table->decimal('monthly_collected', 10, 2)->default(0);
             $table->timestamps();
         });
     }
@@ -29,8 +31,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        $table = 'files';
-        Storage::disk('local')->put($table.'_'.date('Y-m-d_H-i-s').'.bak', json_encode(DB::table($table)->get()));
-        Schema::drop('files');
+        Schema::dropIfExists('vg_systems');
     }
 }

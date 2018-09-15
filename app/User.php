@@ -43,4 +43,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Investment::class);
     }
+
+
+    /**
+     * Get investor.
+     */
+    public function vgSystemSharing()
+    {
+        return $this->hasOne(VgSystemSharing::class);
+    }
 }

@@ -64,7 +64,7 @@ class OwnerUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-            return view('owner.pages.dashboard');
+            return redirect('owner/dashboard');
         }
 
         return redirect('owner/login')
