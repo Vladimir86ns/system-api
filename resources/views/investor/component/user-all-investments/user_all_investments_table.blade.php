@@ -15,10 +15,7 @@
                 <tr>
                   <th>Name</th>
                   <th class="numeric">You Invested</th>
-                  <th class="numeric">Percentage Owning</th>
-                  <th class="numeric">Collected To Date</th>
-                  <th class="numeric">Monthly Collected</th>
-                  <th class="numeric">Collected</th>
+                  <th class="numeric">Percentage Invested In Single Investion</th>
                   <th class="numeric">Left For Investing</th>
                   <th class="numeric">Action</th>
                 </tr>
@@ -28,10 +25,7 @@
                   <tr>
                     <td>{{ $investment['name'] }}</td>
                     <td class="numeric">{{ $investment['total_investment'] }}</td>
-                    <td class="numeric">{{ $investment['percent_of_income'] }}</td>
-                    <td class="numeric">{{ $investment['investment_collected_total'] }}</td>
-                    <td class="numeric">{{ $investment['monthly_collected'] }}</td>
-                    <td class="numeric">{{ $investment['investment_collected'] ? 'Yes' : 'No' }}</td>
+                    <td class="numeric">{{ $investment['percentage'] }}</td>
                     <td class="numeric">{{ $investment['left_to_invest'] }}</td>
                     <td>
                       <a href="#">

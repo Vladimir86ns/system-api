@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\VgSystem\VgSystemService;
 use App\Http\Requests\AdminInvestmentCreateRequest;
 use App\Services\AdminInvestment\AdminInvestmentService;
 
@@ -233,7 +234,7 @@ class AdminInvestmentController extends Controller
      * @param int $id Investment ID
      * @return \Illuminate\Http\Response
      */
-    public function confirm(AdminInvestmentCreateRequest $request, $id)
+    public function confirm(AdminInvestmentCreateRequest $request, $id, VgSystemService $vgSystemService)
     {
         $request->validate([
             'owner_id' => 'required|integer',
@@ -250,6 +251,8 @@ class AdminInvestmentController extends Controller
         if (!$isCreated) {
             return back()->with('error', 'This investment is already on production!');
         }
+
+        $vgSystemService->updateVgSystem();
 
         return redirect('/investment-admin/get-all-investments')
             ->with('success', 'Investment is on production!');

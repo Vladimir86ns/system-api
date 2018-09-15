@@ -11,7 +11,7 @@ class Investment extends Model
     protected $fillable = [
         'users_id',
         'total_investment',
-        'percent_of_income',
+        'percentage',
         'investment_collected_total',
         'monthly_collected',
         'investment_collected',

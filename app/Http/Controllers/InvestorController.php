@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Investor\InvestorService;
+use App\Services\VgSystem\VgSystemService;
 use League\Fractal\Manager as FractalManager;
 use App\Services\Investor\InvestorValidationService;
 use App\Transformers\Investor\InvestmentTransformer;
@@ -27,6 +28,11 @@ class InvestorController extends Controller
     protected $transform;
 
     /**
+     * @var VgSystemService
+     */
+    protected $vgSystemService;
+
+    /**
      * @var FractalManager
      */
     protected $fractal;
@@ -38,17 +44,21 @@ class InvestorController extends Controller
      * @param InvestorService $investorService
      * @param FractalManager $fractal
      * @param InvestmentTransformer $investmentTransformer
+     * @param VgSystemService $vgSystemService
      */
     public function __construct(
         InvestorValidationService $investorValidationService,
         InvestorService $investorService,
         FractalManager $fractal,
-        InvestmentTransformer $investmentTransformer
+        InvestmentTransformer $investmentTransformer,
+        VgSystemService $vgSystemService
     ) {
         $this->validationService = $investorValidationService;
         $this->service = $investorService;
         $this->fractal = $fractal;
         $this->transform = $investmentTransformer;
+        $this->vgSystemService = $vgSystemService;
+
     }
 
     /**
@@ -60,8 +70,11 @@ class InvestorController extends Controller
     {
         $allInvestments = $this->service->getAllApprovedForGivenCountry($country);
         $transformedAllInvestments = $this->service->getAllFromTransformer($allInvestments);
+        $transformedVgSystem = $this->vgSystemService->getVgSystemFromTransformer();
 
-        return view('investor.pages.find_all_investments', compact(['transformedAllInvestments']));
+        return view(
+            'investor.pages.find_all_investments',
+            compact(['transformedAllInvestments', 'transformedVgSystem']));
     }
 
     /**
@@ -77,9 +90,11 @@ class InvestorController extends Controller
         $investment = $this->service->getInvestment($id);
         $transformedSingleInvestment = $this->service->getSingleFromTransformer($investment);
 
+        $transformedVgSystem = $this->vgSystemService->getVgSystemFromTransformer();
+
         return view(
             'investor.pages.find_all_investments',
-            compact(['transformedAllInvestments', 'transformedSingleInvestment'])
+            compact(['transformedAllInvestments', 'transformedSingleInvestment', 'transformedVgSystem'])
         );
     }
 

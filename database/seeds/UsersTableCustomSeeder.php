@@ -3,8 +3,17 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UsersTableSeeder extends Seeder
+class UsersTableCustomSeeder extends Seeder
 {
+    // OWNERS EMAIL
+    const GOGA_OWNER_EMAIL = 'gogaOwner@gmail.com';
+    const DANIJELA_OWNER_EMAIL = 'danijelaOwner@gmail.com';
+    const NATASA_OWNER_EMAIL = 'natasaBokanOwner@gmail.com';
+    const RAJKA_OWNER_EMAIL = 'rajkaOwner@gmail.com';
+    const MARKO_OWNER_EMAIL = 'markoOwner@gmail.com';
+    const VLADIMIR_OWNER_EMAIL = 'vladimirOwner@gmail.com';
+    const ZORAN_OWNER_EMAIL = 'zoranOwner@gmail.com';
+
     /**
      * Run the database seeds.
      *
@@ -12,6 +21,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $password = 'test123';
+
         // ADMIN INVESTOR
         $permissions = [
             'admin-investment' => 1,
@@ -20,7 +31,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Vladimir',
             'last_name' => 'Grujin',
             'email' => 'vladimirInvestments@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -33,7 +44,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Zoran',
             'last_name' => 'Kovacevic',
             'email' => 'zoranInvestor@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -41,7 +52,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Milos',
             'last_name' => 'Jandric',
             'email' => 'milosInvestor@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -49,7 +60,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Milan',
             'last_name' => 'Bokan',
             'email' => 'bokanInvestor@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -60,16 +71,56 @@ class UsersTableSeeder extends Seeder
         Sentinel::registerAndActivate([
             'first_name' => 'Danijela',
             'last_name' => 'Kovacevic',
-            'email' => 'danijelaOwner@gmail.com',
-            'password' => 'test123',
+            'email' => self::DANIJELA_OWNER_EMAIL,
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
         Sentinel::registerAndActivate([
             'first_name' => 'Vladimir',
             'last_name' => 'Jandric',
-            'email' => 'vladimirOwner@gmail.com',
-            'password' => 'test123',
+            'email' => self::VLADIMIR_OWNER_EMAIL,
+            'password' => $password,
+            'permissions' => $permissions,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'first_name' => 'Goran',
+            'last_name' => 'Stojanovic',
+            'email' => self::GOGA_OWNER_EMAIL,
+            'password' => $password,
+            'permissions' => $permissions,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'first_name' => 'Natasa',
+            'last_name' => 'Bokan',
+            'email' => self::NATASA_OWNER_EMAIL,
+            'password' => $password,
+            'permissions' => $permissions,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'first_name' => 'Rajka',
+            'last_name' => 'Karan',
+            'email' => self::RAJKA_OWNER_EMAIL,
+            'password' => $password,
+            'permissions' => $permissions,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'first_name' => 'Marko',
+            'last_name' => 'Stojic',
+            'email' => self::MARKO_OWNER_EMAIL,
+            'password' => $password,
+            'permissions' => $permissions,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'first_name' => 'Zoran',
+            'last_name' => 'Djakovic',
+            'email' => self::ZORAN_OWNER_EMAIL,
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -81,7 +132,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Predrag',
             'last_name' => 'Saponja',
             'email' => 'pedjaSupervisor@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -93,7 +144,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Zoran',
             'last_name' => 'Pavlica',
             'email' => 'pavlicaEmployee@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -101,7 +152,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Petar',
             'last_name' => 'Korlat',
             'email' => 'petarKotlarEmployee@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
 
@@ -109,7 +160,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Dejan',
             'last_name' => 'Nikolic',
             'email' => 'DejanNikolicEmployee@gmail.com',
-            'password' => 'test123',
+            'password' => $password,
             'permissions' => $permissions,
         ]);
     }

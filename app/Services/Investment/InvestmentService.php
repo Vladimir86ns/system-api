@@ -7,6 +7,9 @@ use Sentinel;
 use App\Company;
 use App\Investment;
 use App\AdminInvestment;
+use App\VgSystemSharing;
+use App\Services\VgSystem\VgSystemService;
+use App\Services\VgSystemSharing\VgSystemSharingService;
 use App\Transformers\AdminInvestment\AdminInvestmentTransformer;
 
 class InvestmentService
@@ -17,14 +20,30 @@ class InvestmentService
     protected $adminInvestmentTransformer;
 
     /**
+     * @var vgSystemService
+     */
+    protected $vgSystemService;
+
+    /**
+     * @var vgSystemSharingService
+     */
+    protected $vgSystemSharingService;
+
+    /**
      * InvestmentService
      *
+     * @param VgSystemService $vgSystemService
      * @param AdminInvestmentTransformer $adminInvestmentTransformer
+     * @param VgSystemSharingService $vgSystemSharingService
      */
     public function __construct(
-        AdminInvestmentTransformer $adminInvestmentTransformer
+        VgSystemService $vgSystemService,
+        AdminInvestmentTransformer $adminInvestmentTransformer,
+        VgSystemSharingService $vgSystemSharingService
     ) {
         $this->adminInvestmentTransformer = $adminInvestmentTransformer;
+        $this->vgSystemService = $vgSystemService;
+        $this->vgSystemSharingService = $vgSystemSharingService;
     }
 
     /**
@@ -51,6 +70,8 @@ class InvestmentService
         $adminInvestment = $this->updateAdminInvestment($id, $attributes);
         $this->updateCompanyInvestmentCollected($company, $adminInvestment);
         $this->updateOrCreateUserInvestment($attributes, $adminInvestment);
+        $this->updateVgSystem();
+        $this->updateOrCreateVgSystemSharing($this->getUser());
 
         return $this->adminInvestmentTransformer->transform($adminInvestment);
     }
@@ -75,7 +96,7 @@ class InvestmentService
             $investment->total_investment += $attributes['total_investment'];
 
             // save percentage
-            $investment->percent_of_income = $this->getPercentage(
+            $investment->percentage = $this->getPercentage(
                 $investment->total_investment,
                 $adminInvestment->total_investition
             );
@@ -147,7 +168,7 @@ class InvestmentService
     {
         $attributes['company_id'] = $adminInvestment->companies->id;
         $attributes['admin_investment_id'] = $adminInvestment->id;
-        $attributes['percent_of_income'] = $this->getPercentage(
+        $attributes['percentage'] = $this->getPercentage(
             $attributes['total_investment'],
             $adminInvestment->total_investition
         );
@@ -181,5 +202,19 @@ class InvestmentService
     private function updateCompanyInvestmentCollected(Company $company, AdminInvestment $adminInvestment)
     {
         $company->update(['investment_collected' => $adminInvestment->collected_to_date]);
+    }
+
+    /**
+     * Update vg system.
+     *
+     */
+    private function updateVgSystem()
+    {
+        $this->vgSystemService->updateVgSystem();
+    }
+
+    private function updateOrCreateVgSystemSharing(User $user)
+    {
+        $this->vgSystemSharingService->updateOrCreateVgSystemSharing($user);
     }
 }

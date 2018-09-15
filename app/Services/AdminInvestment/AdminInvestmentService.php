@@ -4,6 +4,7 @@ namespace App\Services\AdminInvestment;
 
 use App\User;
 use App\AdminInvestment;
+use Illuminate\Support\Facades\DB;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Manager as FractalManager;
 use App\Transformers\AdminInvestment\AdminInvestmentTransformer;
@@ -191,5 +192,20 @@ class AdminInvestmentService
                 return $value;
             }
         })->toArray();
+    }
+
+    /**
+     * Get sum of total_investition and collected_to_date.
+     *
+     * @return User
+     */
+    public function getSumAdminInvestment()
+    {
+        // TODO need to write one sql later on.
+
+        return [
+            'total_investments' => AdminInvestment::sum('total_investition'),
+            'total_collected_to_date' => AdminInvestment::sum('collected_to_date')
+        ];
     }
 }

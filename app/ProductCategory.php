@@ -20,6 +20,6 @@ class ProductCategory extends Model
      */
     public function companies()
     {
-        return $this->belongsToMany(Company::class);
+        return $this->belongsTo(Company::class);
     }
 }

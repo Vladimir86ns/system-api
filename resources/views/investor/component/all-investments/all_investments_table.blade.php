@@ -6,7 +6,9 @@
       <div class="portlet box primary">
         <div class="portlet-title">
           <div class="caption">
-            <i data-name="responsive" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> Investments
+            <i data-name="responsive" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+              TOTAL FOR INVESTING: {{$transformedVgSystem['total_investitions']}}
+              ; TOTAL COLLECTED TO DATE: {{$transformedVgSystem['collected_to_date']}}
           </div>
         </div>
         <div class="portlet-body flip-scroll">

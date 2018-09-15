@@ -50,4 +50,12 @@ class Company extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Get all product categories.
+     */
+    public function productCategories()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
 }
