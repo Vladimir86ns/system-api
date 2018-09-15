@@ -24,7 +24,7 @@ class CreateCompanyProductsTable extends Migration
             $table->decimal('cost', 10, 2)->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->string('picture')->nullable();
-            $table->integer('time_to_prepare');
+            $table->integer('time_to_prepare')->nullable();
             $table->foreign('product_categories_id')->references('id')->on('product_categories');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();

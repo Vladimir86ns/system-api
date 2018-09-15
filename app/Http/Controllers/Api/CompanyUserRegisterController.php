@@ -33,13 +33,15 @@ class CompanyUserRegisterController extends BaseController
         }
 
         if (Sentinel::authenticate($request->only(['email', 'password']))) {
-            $user = Sentinel::getUser();
+            $user = User::find(Sentinel::getUser()->id);
         } else {
             abort(400, 'Your email or password are not correct!');
         }
 
+        $permissions = json_decode($user->permissions, true);
+
         // check dose user has owner permissions
-        if (!array_key_exists('owner', $user->permissions) || $user->permissions['owner'] == 0) {
+        if (!array_key_exists('owner', $permissions) || $permissions['owner'] == 0) {
             abort(400, 'Your are not authorized!');
         }
 

@@ -24,7 +24,7 @@ class Company extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->hasOne(User::class, 'owner_id');
     }
 
     /**
@@ -57,5 +57,13 @@ class Company extends Model
     public function productCategories()
     {
         return $this->hasMany(ProductCategory::class);
+    }
+
+    /**
+     * Get the product categories record associated with the product.
+     */
+    public function companyProducts()
+    {
+        return $this->hasMany(CompanyProduct::class);
     }
 }

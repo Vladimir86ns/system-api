@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanyTableCustomSeeder::class);
         $this->call(CompanyCategoriesTableCustomSeeder::class);
         $this->call(VgSystemTableCustomSeeder::class);
+        $this->call(CompanyProductsTableCustomSeeder::class);
     }
 }
