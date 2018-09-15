@@ -61,8 +61,6 @@ class CompanyTableCustomSeeder extends Seeder
                     'owner_id' => $owner->id
                 ]
             );
-
-            // $company = $owner
         }
     }
 }
