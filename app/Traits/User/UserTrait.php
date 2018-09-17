@@ -14,6 +14,6 @@ trait UserTrait
 
     public function getCompany()
     {
-        return $this->getUser()->company;;
+        return $this->getUser()->company;
     }
 }

@@ -9,19 +9,16 @@ use Illuminate\Foundation\Auth\User;
 
 class OwnerService
 {
-
-	/**
-	 * Store new product category.
-	 *
-	 * @param array $attributes
-	 * @param Company $company
-	 *
-	 * @return ProductCategory
-	 */
+    /**
+     * Store new product category.
+     *
+     * @param array $attributes
+     * @param Company $company
+     *
+     * @return ProductCategory
+     */
     public function store(array $attributes, Company $company)
     {
-		return $company->productCategories()->create($attributes);
+        return $company->productCategories()->create($attributes);
     }
 }
-
-

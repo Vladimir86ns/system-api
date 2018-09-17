@@ -10,7 +10,5 @@ use Illuminate\Foundation\Auth\User;
 
 class OwnerValidationService
 {
-	use CompanyValidationTrait;
+    use CompanyValidationTrait;
 }
-
-

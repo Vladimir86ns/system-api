@@ -17,10 +17,10 @@ class OwnerController extends Controller
      */
     protected $service;
 
-	/**
-	 * @var OwnerValidationService
-	 */
-	protected $validation;
+    /**
+     * @var OwnerValidationService
+     */
+    protected $validation;
 
     /**
      * OwnerController
@@ -30,27 +30,27 @@ class OwnerController extends Controller
      */
     public function __construct(
         OwnerService $ownerService,
-		OwnerValidationService $ownerValidationService
+        OwnerValidationService $ownerValidationService
     ) {
         $this->service = $ownerService;
         $this->validation = $ownerValidationService;
     }
 
-	/**
-	 * Get page with form for creating company product category.
-	 *
-	 * @return view
-	 */
+    /**
+     * Get page with form for creating company product category.
+     *
+     * @return view
+     */
     public function createProductCategory()
     {
         return  view('owner.pages.product-category');
     }
 
-	/**
-	 * Store new company product category in DB.
-	 *
-	 * @return view
-	 */
+    /**
+     * Store new company product category in DB.
+     *
+     * @return view
+     */
     public function storeProductCategory(Request $request)
     {
         $request->validate([
@@ -61,11 +61,11 @@ class OwnerController extends Controller
         $newProduct = $this->service->store($request->all(), $company);
 
         if ($newProduct) {
-	        return redirect('/owner/create-product-category')
-		        ->with("error", "Something went wrong!");
+            return redirect('/owner/create-product-category')
+                ->with("error", "Something went wrong!");
         }
 
-	    return redirect('/owner/create-product-category')
-		    ->with("success", "A new product category {$newProduct->name} is successfully added!");
+        return redirect('/owner/create-product-category')
+            ->with("success", "A new product category {$newProduct->name} is successfully added!");
     }
 }

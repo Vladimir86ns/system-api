@@ -6,40 +6,40 @@ use App\Traits\User\UserTrait;
 
 trait CompanyValidationTrait
 {
-	use UserTrait;
+    use UserTrait;
 
-	/**
-	 * Validate Company exist
-	 *
-	 * @param int $id Company ID
-	 * @return \Company
-	 */
-	public function getAndValidateCompanyId(int $id)
-	{
-		$this->validateId($id);
+    /**
+     * Validate Company exist
+     *
+     * @param int $id Company ID
+     * @return \Company
+     */
+    public function getAndValidateCompanyId($id)
+    {
+        $this->validateId($id);
 
-		$company = Company::find($id);
+        $company = Company::find($id);
 
-		if ($company) {
-			return $company;
-		}
+        if ($company) {
+            return $company;
+        }
 
-		abort(404, "Company ID: {$id} is invalid!");
-	}
+        abort(404, "Company ID: {$id} is invalid!");
+    }
 
-	/**
-	 * Validate User company relatrion.
-	 *
-	 * @return \Company
-	 */
-	public function getCompanyFromUserRelation()
-	{
-		$company = $this->getCompany();
+    /**
+     * Validate User company relatrion.
+     *
+     * @return \Company
+     */
+    public function getCompanyFromUserRelation()
+    {
+        $company = $this->getCompany();
 
-		if ($company) {
-			return $company;
-		}
+        if ($company) {
+            return $company;
+        }
 
-		abort(404, "Company not found!");
-	}
+        abort(404, "Company not found!");
+    }
 }
