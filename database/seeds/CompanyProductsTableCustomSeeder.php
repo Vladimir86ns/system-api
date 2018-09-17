@@ -5,6 +5,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use database\seeds\UsersTableCustomSeeder;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+ */
 class CompanyProductsTableCustomSeeder extends Seeder
 {
     /**
