@@ -8,6 +8,6 @@
 
 {{-- Page content --}}
 @section('content')
-    @include('owner.form.product-category.')
+    @include('owner.form.product.product')
 @stop
 
