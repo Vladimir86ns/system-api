@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyProductRequest;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyValidationService;
 use Illuminate\Http\Request;
@@ -58,15 +59,15 @@ class CompanyController extends Controller
         ]);
 
         $company = $this->validation->getCompanyFromUserRelation();
-        $newProduct = $this->service->store($request->all(), $company);
+        $newProductCategory = $this->service->storeProductCompany($request->all(), $company);
 
-        if (!$newProduct) {
+        if (!$newProductCategory) {
             return redirect('/owner/create-product-category')
                 ->with("error", "Something went wrong!");
         }
 
         return redirect('/owner/create-product-category')
-            ->with("success", "A new product category {$newProduct->name} is successfully added!");
+            ->with("success", "A new product category {$newProductCategory->name} is successfully added!");
     }
     
     /**
@@ -81,5 +82,25 @@ class CompanyController extends Controller
         $productCategories = $company->productCategories->toArray();
 
         return  view('owner.pages.add-product', compact(['productCategories']));
+    }
+    
+    /**
+     * Store new product to DB.
+     *
+     * @return view
+     */
+    public function storeProduct(CompanyProductRequest $request)
+    {
+        $company = $this->validation->getCompanyFromUserRelation();
+        $newProduct = $this->service->storeProduct($request->all(), $company);
+
+        if (!$newProduct) {
+            return redirect('/owner/create-product')
+                ->with("error", "Something went wrong!");
+        }
+    
+        return redirect('/owner/create-product')
+            ->with("success", "A new product {$newProduct->name} is successfully added!");
+        
     }
 }

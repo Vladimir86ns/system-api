@@ -17,8 +17,21 @@ class CompanyService
      *
      * @return ProductCategory
      */
-    public function store(array $attributes, Company $company)
+    public function storeProductCompany(array $attributes, Company $company)
     {
         return $company->productCategories()->create($attributes);
+    }
+    
+    /**
+     * Store new product.
+     *
+     * @param array $attributes
+     * @param Company $company
+     *
+     * @return ProductCategory
+     */
+    public function storeProduct(array $attributes, Company $company)
+    {
+        return $company->companyProducts()->create($attributes);
     }
 }

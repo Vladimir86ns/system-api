@@ -57,9 +57,10 @@ Route::group([ 'prefix' => 'owner'], function () {
     // WITH MIDDLEWARE
     Route::group(['middleware' => ['check-owner']], function () {
         Route::get('/dashboard', 'OwnerUserController@dashboard');
+        Route::get('/create-product', 'CompanyController@createProduct');
+        Route::post('/store-product', 'CompanyController@storeProduct');
         Route::get('/create-product-category', 'CompanyController@createProductCategory');
         Route::post('/store-product-category', 'CompanyController@storeProductCategory');
-        Route::get('/create-product', 'CompanyController@createProduct');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'OwnerUserController@getSignIn');
