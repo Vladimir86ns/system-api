@@ -39,7 +39,7 @@
 
       <!-- ADD NEW PRODUCT -->
       <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
-        <a href="#">
+        <a href="/owner/create-product">
           <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
              data-loop="true"></i>
           <span class="title">New Product</span>
