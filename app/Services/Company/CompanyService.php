@@ -2,14 +2,16 @@
 
 namespace App\Services\Company;
 
+use App\User;
+use Sentinel;
 use App\Company;
 use App\ProductCategory;
-use Sentinel;
-use App\User;
+use App\Traits\Redis\RedisTrait;
+use Illuminate\Support\Facades\DB;
 
 class CompanyService
 {
-    private $employeeSelectedIds = [];
+    use RedisTrait;
     
     /**
      * Store new product category.
@@ -23,7 +25,7 @@ class CompanyService
     {
         return $company->productCategories()->create($attributes);
     }
-    
+
     /**
      * Store new product.
      *
@@ -36,7 +38,7 @@ class CompanyService
     {
         return $company->companyProducts()->create($attributes);
     }
-    
+
     /**
      * Get all un selected employees.
      *
@@ -53,35 +55,108 @@ class CompanyService
                 return $user;
             })->toArray();
     }
-    
+
     /**
-     * Tag selected employee.
+     * Tag selected employee, add id in redis.
      *
      * @param int $employeeId employeeID
      * @return User
      */
     public function tagSelectedEmployees(int $employeeId)
     {
-        array_push($this->employeeSelectedIds, $employeeId);
-        $employees = $this->getUnSelectedEmployees();
-        
-        return collect($employees)->map(function($employee) use ($employeeId) {
-            $employee['selected'] = false;
+        $ids = $this->addIdInRedis($employeeId);
+        return $this->getSelectedEmployees($ids);
+    }
 
-            if (in_array($employee['id'], $this->employeeSelectedIds)) {
-                $employee['selected'] = true;
-            }
-            
-            return $employee;
-        })->toArray();
+    /**
+     * un tag selected employee, remove id from redis.
+     *
+     * @param int $employeeId employeeID
+     * @return User
+     */
+    public function unTagSelectedEmployees(int $employeeId)
+    {
+        $ids = $this->removeIdFromRedis($employeeId);
+        return $this->getSelectedEmployees($ids);
     }
     
     /**
-     * Reset selected employee Ids.
+     * Hire employees to company.
      *
+     * @param Company $company.
+     * @return User
      */
-    public function initSelectedEmployees()
+    public function hireEmployees(Company $company)
     {
-        $this->employeeSelectedIds = [];
+        $ids = $this->getSelectedEmployeesIdsFromRedis();
+        $employees = User::whereIn('id', $ids)->get();
+    
+        DB::transaction(function () use ($employees, $company) {
+            foreach ($employees as $employee) {
+                $employee->company_id = $company->id;
+                $employee->employee_active = 1;
+                $employee->save();
+            }
+        });
+    
+        $this->removeKeyForSelectingEmployeesFromRedis();
+    }
+
+    /**
+     * Get ids from redis, and return employees with selected propery.
+     *
+     * @param array $ids employeeIds
+     * @return User
+     */
+    private function getSelectedEmployees(array $ids)
+    {
+        $employees = $this->getUnSelectedEmployees();
+
+        return collect($employees)->map(function($employee) use ($ids) {
+            $employee['selected'] = false;
+            if (in_array($employee['id'], $ids)) {
+                $employee['selected'] = true;
+            }
+
+            return $employee;
+        })->toArray();
+    }
+
+    /**
+     * Save in redis and gate value from redis.
+     * This key is set to 15min.
+     *
+     * @param int $employeeId employeeID
+     * @return array
+     */
+    private function addIdInRedis(int $employeeId)
+    {
+        $ids = $this->getSelectedEmployeesIdsFromRedis();
+        $selectedIds = $ids ? collect($ids)->unique()->toArray() : [];
+        array_push($selectedIds, $employeeId);
+        
+        $this->saveIdInEmployeeSelectedIdsInRedis($selectedIds);
+
+        return $selectedIds;
+    }
+
+    /**
+     * Un select id from redis.
+     * This key is set to 15min.
+     *
+     * @param int $employeeId employeeID
+     * @return array
+     */
+    private function removeIdFromRedis(int $employeeId)
+    {
+        $ids = $this->getSelectedEmployeesIdsFromRedis();
+
+        $newIds = collect($ids)->filter(function($id) use ($employeeId) {
+            return $id != $employeeId;
+        })->toArray();
+    
+        $this->saveIdInEmployeeSelectedIdsInRedis($newIds);
+
+        return $newIds;
     }
 }

@@ -26,7 +26,7 @@
               <td>{{ $employee['city']  }}</td>
               <td>{{ $employee['address'] }}</td>
               @if($employee['selected'])
-                <td><a href="#">Remove</a></td>
+                <td><a href="/owner/employees/{{ $employee['id'] }}/un-select">Remove</a></td>
               @else
                 <td><a href="/owner/employees/{{ $employee['id'] }}/select">Add</a></td>
               @endIf
@@ -34,6 +34,11 @@
           @endforeach
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="col-md-12 mar-10">
+      <div class="col-xs-12 col-md-12">
+        <a href="/owner/hire/employees" class="btn btn-success btn-block btn-md btn-responsive">Add Employees</a>
       </div>
     </div>
   </div>

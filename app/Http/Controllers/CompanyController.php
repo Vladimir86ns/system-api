@@ -79,7 +79,6 @@ class CompanyController extends Controller
     public function createProduct()
     {
         $company = $this->validation->getCompanyFromUserRelation();
-        
         $productCategories = $company->productCategories->toArray();
 
         return  view('owner.pages.add-product', compact(['productCategories']));
@@ -117,7 +116,7 @@ class CompanyController extends Controller
     }
     
     /**
-     * Tug selected employee before hire them.
+     * Tag selected employee before hire them.
      *
      * @param $id employeeID
      * @return view
@@ -125,6 +124,32 @@ class CompanyController extends Controller
     public function selectEmployees($id)
     {
         $employees = $this->service->tagSelectedEmployees($id);
+        return  view('owner.pages.add-employees', compact(['employees']));
+    }
+    
+    /**
+     * Un tag selected employee before hire them.
+     *
+     * @param $id employeeID
+     * @return view
+     */
+    public function unSelectEmployees($id)
+    {
+        $employees = $this->service->unTagSelectedEmployees($id);
+        return  view('owner.pages.add-employees', compact(['employees']));
+    }
+    
+    /**
+     * Hire employees to company.
+     *
+     * @return view
+     */
+    public function hireEmployees()
+    {
+        $company = $this->validation->getCompanyFromUserRelation();
+        $this->service->hireEmployees($company);
+        $employees = $this->service->getUnSelectedEmployees();
+        
         return  view('owner.pages.add-employees', compact(['employees']));
     }
 }

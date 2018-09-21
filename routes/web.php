@@ -63,6 +63,8 @@ Route::group([ 'prefix' => 'owner'], function () {
         Route::post('/store-product-category', 'CompanyController@storeProductCategory');
         Route::get('/un-active-employees', 'CompanyController@getUnActiveEmployees');
         Route::get('/employees/{id}/select', 'CompanyController@selectEmployees');
+        Route::get('/employees/{id}/un-select', 'CompanyController@unSelectEmployees');
+        Route::get('/hire/employees', 'CompanyController@hireEmployees');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'OwnerUserController@getSignIn');
