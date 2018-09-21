@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyProductRequest;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyValidationService;
+use App\User;
 use Illuminate\Http\Request;
 use App\Traits\User\UserTrait;
 use Illuminate\Support\Facades\Redirect;
@@ -102,5 +103,28 @@ class CompanyController extends Controller
         return redirect('/owner/create-product')
             ->with("success", "A new product {$newProduct->name} is successfully added!");
         
+    }
+    
+    /**
+     * Get all un active employees.
+     *
+     * @return view
+     */
+    public function getUnActiveEmployees()
+    {
+        $employees = $this->service->getUnSelectedEmployees();
+        return  view('owner.pages.add-employees', compact(['employees']));
+    }
+    
+    /**
+     * Tug selected employee before hire them.
+     *
+     * @param $id employeeID
+     * @return view
+     */
+    public function selectEmployees($id)
+    {
+        $employees = $this->service->tagSelectedEmployees($id);
+        return  view('owner.pages.add-employees', compact(['employees']));
     }
 }
