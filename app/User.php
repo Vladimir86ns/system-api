@@ -45,13 +45,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the phone record associated with the user.
+     * Get the owner of company.
      */
     public function company()
     {
         return $this->hasOne(Company::class, 'owner_id');
     }
-
+    
 
     /**
      * Get investor.

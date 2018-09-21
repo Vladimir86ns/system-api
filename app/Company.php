@@ -26,6 +26,7 @@ class Company extends Model
     {
         return $this->hasOne(User::class, 'owner_id');
     }
+    
 
     /**
      * Get the admin investments.

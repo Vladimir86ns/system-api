@@ -2,12 +2,12 @@
 
 {{-- Page title --}}
 @section('title')
-  Create New Product Category
+  Add new Employees
   @parent
 @stop
 
 {{-- Page content --}}
 @section('content')
-  @include('owner.form.product.product')
+  @include('owner.component.employees.add-employee-table')
 @stop
 
