@@ -47,13 +47,13 @@ class CompanyService
      */
     public function getUnSelectedEmployees()
     {
-        return User::get()->filter(function($user) {
-                $permission = json_decode($user->permissions, true);
-                return !empty($permission['employee']) && $user->employee_active === 0;
-            })->map(function ($user) {
-                $user['selected'] = false;
-                return $user;
-            })->toArray();
+        return User::get()->filter(function ($user) {
+            $permission = json_decode($user->permissions, true);
+            return !empty($permission['employee']) && $user->employee_active === 0;
+        })->map(function ($user) {
+            $user['selected'] = false;
+            return $user;
+        })->toArray();
     }
 
     /**
@@ -69,7 +69,7 @@ class CompanyService
     }
 
     /**
-     * un tag selected employee, remove id from redis.
+     * Un tag selected employee, remove id from redis.
      *
      * @param int $employeeId employeeID
      * @return User
@@ -112,7 +112,7 @@ class CompanyService
     {
         $employees = $this->getUnSelectedEmployees();
 
-        return collect($employees)->map(function($employee) use ($ids) {
+        return collect($employees)->map(function ($employee) use ($ids) {
             $employee['selected'] = false;
             if (in_array($employee['id'], $ids)) {
                 $employee['selected'] = true;
@@ -151,7 +151,7 @@ class CompanyService
     {
         $ids = $this->getSelectedEmployeesIdsFromRedis();
 
-        $newIds = collect($ids)->filter(function($id) use ($employeeId) {
+        $newIds = collect($ids)->filter(function ($id) use ($employeeId) {
             return $id != $employeeId;
         })->toArray();
     

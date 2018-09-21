@@ -101,7 +101,6 @@ class CompanyController extends Controller
     
         return redirect('/owner/create-product')
             ->with("success", "A new product {$newProduct->name} is successfully added!");
-        
     }
     
     /**
