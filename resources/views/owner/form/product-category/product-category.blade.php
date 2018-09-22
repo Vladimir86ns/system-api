@@ -12,7 +12,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <form action="/owner/store-product-category" method="POST" onsubmit="return Validation()" role="form" id="create_product_category">
+          <form action="/owner/product-category/store" method="POST" onsubmit="return Validation()" role="form" id="create_product_category">
             <div class="col-md-12">
               <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

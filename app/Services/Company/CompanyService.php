@@ -115,6 +115,21 @@ class CompanyService
             ->with('productCategory')
             ->paginate(10);
     }
+    
+    /**
+     * Get all company products by name.
+     *
+     * @param Company $company.
+     * @param string $name.
+     * @return User
+     */
+    public function getAllProductsByName(Company $company, string $name)
+    {
+        return CompanyProduct::where('company_id', $company->id)
+            ->where('name', 'like', '%' . $name . '%')
+            ->with('productCategory')
+            ->paginate(10);
+    }
 
     /**
      * Get ids from redis, and return employees with selected propery.

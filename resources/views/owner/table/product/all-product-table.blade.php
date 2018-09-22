@@ -8,14 +8,14 @@
         </div>
       </div>
       <div class="portlet-body flip-scroll">
-        <form id="search">
+        <form action="/owner/product/by-name" method="GET" id="search">
           <div class="form-group input-group">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">
+              <button class="btn btn-default" type="submit" name="btnSubmit">
                 <i class="fa fa-search"></i>
               </button>
             </span>
-            <input type="text" class="form-control" placeholder="Search by name">
+            <input type="text" name="name" id="name" class="form-control" placeholder="Search by name">
           </div>
         </form>
         <table class="table table-bordered table-striped table-condensed flip-content">

@@ -164,4 +164,23 @@ class CompanyController extends Controller
         
         return view('owner.pages.all-product', compact(['products']));
     }
+    
+    /**
+     * Get all company products by name.
+     *
+     * @return view
+     */
+    public function getByName(Request $request)
+    {
+        $name = $request->get('name');
+        $company = $this->validation->getCompanyFromUserRelation();
+        
+        if ($name) {
+            $products = $this->service->getAllProductsByName($company, $name);
+        } else {
+            return $this->getAllProducts();
+        }
+    
+        return view('owner.pages.all-product', compact(['products']));
+    }
 }

@@ -12,7 +12,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <form action="/owner/store-product" method="POST" onsubmit="return Validation()" role="form" id="product_category">
+          <form action="/owner/product/store" method="POST" onsubmit="return Validation()" role="form" id="product_category">
 
             <div class="col-md-12">
               <div class="form-group {{ $errors->first('product_category_id', 'has-error') }}">
