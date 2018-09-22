@@ -65,6 +65,7 @@ Route::group([ 'prefix' => 'owner'], function () {
         Route::get('/employees/{id}/select', 'CompanyController@selectEmployees');
         Route::get('/employees/{id}/un-select', 'CompanyController@unSelectEmployees');
         Route::get('/employees/hire', 'CompanyController@hireEmployees');
+        Route::get('/product/all', 'CompanyController@getAllProducts');
     });
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'OwnerUserController@getSignIn');

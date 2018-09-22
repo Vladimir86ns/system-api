@@ -2,6 +2,7 @@
 
 namespace App\Services\Company;
 
+use App\CompanyProduct;
 use App\User;
 use Sentinel;
 use App\Company;
@@ -21,7 +22,7 @@ class CompanyService
      *
      * @return ProductCategory
      */
-    public function storeProductCompany(array $attributes, Company $company)
+    public function storeProductCategory(array $attributes, Company $company)
     {
         return $company->productCategories()->create($attributes);
     }
@@ -100,6 +101,19 @@ class CompanyService
         });
     
         $this->removeKeyForSelectingEmployeesFromRedis();
+    }
+    
+    /**
+     * Get all company products.
+     *
+     * @param Company $company.
+     * @return User
+     */
+    public function getAllProducts(Company $company)
+    {
+        return CompanyProduct::where('company_id', $company->id)
+            ->with('productCategory')
+            ->paginate(10);
     }
 
     /**

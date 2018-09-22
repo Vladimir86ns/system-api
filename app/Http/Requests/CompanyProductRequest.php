@@ -24,7 +24,7 @@ class CompanyProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_categories_id' => 'required|int',
+            'product_category_id' => 'required|int',
             'name' => 'required|min:2',
             'type' => 'min:2',
             'size' => 'min:1',

@@ -15,15 +15,15 @@
           <form action="/owner/store-product" method="POST" onsubmit="return Validation()" role="form" id="product_category">
 
             <div class="col-md-12">
-              <div class="form-group {{ $errors->first('product_categories_id', 'has-error') }}">
+              <div class="form-group {{ $errors->first('product_category_id', 'has-error') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <select class="form-control" name="product_categories_id">
+                <select class="form-control" name="product_category_id">
                   <option value="" selected disabled>Select product category</option>
                   @foreach ($productCategories as $productCategory)
                     <option value={{ $productCategory['id'] }}>{{ $productCategory['name'] }}</option>
                   @endforeach
                 </select>
-                {!! $errors->first('product_categories_id', '<span class="help-block">:message</span>') !!}
+                {!! $errors->first('product_category_id', '<span class="help-block">:message</span>') !!}
               </div>
             </div>
 
@@ -78,7 +78,7 @@
 
             <div class="col-md-12 mar-10">
               <div class="col-xs-6 col-md-6">
-                <input type="submit" name="btnSubmit" id="btnSubmit" value="Create" class="btn btn-success btn-block btn-md btn-responsive">
+                <input type="submit" name="btnSubmit" id="btnSubmit" value="Save" class="btn btn-success btn-block btn-md btn-responsive">
               </div>
               <div class="col-xs-6 col-md-6">
                 <input type="reset" value="Cancel" class="btn btn-danger btn-block btn-md btn-responsive">

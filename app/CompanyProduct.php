@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyProduct extends Model
 {
     protected $fillable = [
-        'product_categories_id',
+        'product_category_id',
         'company_id',
         'name',
         'size',
@@ -24,9 +24,9 @@ class CompanyProduct extends Model
     /**
      * Get the product categories record associated with the product.
      */
-    public function productCategories()
+    public function productCategory()
     {
-        return $this->hasMany(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class);
     }
 
     /**

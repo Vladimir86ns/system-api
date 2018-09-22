@@ -60,7 +60,7 @@ class CompanyController extends Controller
         ]);
 
         $company = $this->validation->getCompanyFromUserRelation();
-        $newProductCategory = $this->service->storeProductCompany($request->all(), $company);
+        $newProductCategory = $this->service->storeProductCategory($request->all(), $company);
 
         if (!$newProductCategory) {
             return redirect('/owner/create-product-category')
@@ -150,5 +150,18 @@ class CompanyController extends Controller
         $employees = $this->service->getUnSelectedEmployees();
         
         return  view('owner.pages.add-employees', compact(['employees']));
+    }
+    
+    /**
+     * Get all company products.
+     *
+     * @return view
+     */
+    public function getAllProducts()
+    {
+        $company = $this->validation->getCompanyFromUserRelation();
+        $products = $this->service->getAllProducts($company);
+        
+        return view('owner.pages.all-product', compact(['products']));
     }
 }
