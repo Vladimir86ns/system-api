@@ -46,7 +46,7 @@ class CompanyUserRegisterController extends BaseController
         }
 
         $token = JWTAuth::fromUser($user);
-        $user->company_pin = Hash::make($inputs['pin']);
+        $user->owner_company_password = Hash::make($inputs['pin']);
         $user->save();
         $transformedUser = $this->companyUserTransformer->transform($user, $token);
 
@@ -62,7 +62,7 @@ class CompanyUserRegisterController extends BaseController
             abort(400, 'Your credentials are not correct!');
         }
 
-        if (!Hash::check($credentials['company_pin'], $user->company_pin)) {
+        if (!Hash::check($credentials['owner_company_password'], $user->owner_company_password)) {
             abort(400, 'Your credentials are not correct!');
         }
 
