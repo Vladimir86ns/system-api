@@ -8,10 +8,12 @@
 
 {{-- Page content --}}
 @section('content')
-  @if(count($employees) > 0)
-    @include('owner.table.employees.add-employee-table')
+
+  @if (isset($selectedProduct))
+    @include('owner.form.product.edit')
   @else
-    <h3>There is no employees for hearing...</h3>
+    @include('owner.table.product.all-product-table')
   @endif
+
 @stop
 

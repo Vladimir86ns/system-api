@@ -54,18 +54,37 @@ Route::group([ 'prefix' => 'investor'], function () {
 
 //  OWNER  COMPANY
 Route::group([ 'prefix' => 'owner'], function () {
+    
     // WITH MIDDLEWARE
     Route::group(['middleware' => ['check-owner']], function () {
         Route::get('/dashboard', 'OwnerUserController@dashboard');
-        Route::get('/create-product', 'CompanyController@createProduct');
-        Route::post('/store-product', 'CompanyController@storeProduct');
-        Route::get('/create-product-category', 'CompanyController@createProductCategory');
-        Route::post('/store-product-category', 'CompanyController@storeProductCategory');
-        Route::get('/employees/un-active', 'CompanyController@getUnActiveEmployees');
-        Route::get('/employees/{id}/select', 'CompanyController@selectEmployees');
-        Route::get('/employees/{id}/un-select', 'CompanyController@unSelectEmployees');
-        Route::get('/employees/hire', 'CompanyController@hireEmployees');
+        
+        // product
+        Route::group([ 'prefix' => 'product'], function () {
+            Route::get('/create', 'CompanyController@createProduct');
+            Route::post('/store', 'CompanyController@storeProduct');
+            Route::get('/edit/{id}', 'CompanyController@editProduct');
+            Route::post('/update/{id}', 'CompanyController@updateProduct');
+            Route::get('/all', 'CompanyController@getAllProducts');
+            Route::get('/by-name', 'CompanyController@getByName');
+            Route::get('/delete/{id}', 'CompanyController@deleteProduct');
+        });
+        
+        // product-category
+        Route::group([ 'prefix' => 'product-category'], function () {
+            Route::get('/create', 'CompanyController@createProductCategory');
+            Route::post('/store', 'CompanyController@storeProductCategory');
+        });
+        
+        // employee
+        Route::group([ 'prefix' => 'employees'], function () {
+            Route::get('/un-active', 'CompanyController@getUnActiveEmployees');
+            Route::get('/{id}/select', 'CompanyController@selectEmployees');
+            Route::get('/{id}/un-select', 'CompanyController@unSelectEmployees');
+            Route::get('/hire', 'CompanyController@hireEmployees');
+        });
     });
+    
     // WITHOUT MIDDLEWARE
     Route::get('/login', 'OwnerUserController@getSignIn');
     Route::post('/sign-up', 'OwnerUserController@signUp');

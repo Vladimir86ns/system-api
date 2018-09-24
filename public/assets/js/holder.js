@@ -1713,7 +1713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	//Modified version of component/querystring
+	//Modified version of table/querystring
 	//Changes: updated dependencies, dot notation parsing, JSHint fixes
 	//Fork at https://github.com/imsky/querystring
 

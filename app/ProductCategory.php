@@ -22,4 +22,12 @@ class ProductCategory extends Model
     {
         return $this->belongsTo(Company::class);
     }
+    
+    /**
+     * Get the company product.
+     */
+    public function companyProducts()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
 }

@@ -441,7 +441,7 @@ class CompanyProductsTableCustomSeeder extends Seeder
         // Pizza
         foreach ($attributes['Pizza'] as $pizza) {
             $category = $allCategories->where('name', 'Pizza')->first();
-            $pizza['product_categories_id'] = $category->id;
+            $pizza['product_category_id'] = $category->id;
             $user->company->companyProducts()->create(
                 $pizza
             );
@@ -450,7 +450,7 @@ class CompanyProductsTableCustomSeeder extends Seeder
         // Burgers
         foreach ($attributes['Burgers'] as $burger) {
             $category = $allCategories->where('name', 'Burgers')->first();
-            $burger['product_categories_id'] = $category->id;
+            $burger['product_category_id'] = $category->id;
             $user->company->companyProducts()->create(
                 $burger
             );
@@ -459,7 +459,7 @@ class CompanyProductsTableCustomSeeder extends Seeder
         // Sandwich
         foreach ($attributes['Sandwich'] as $sandwich) {
             $category = $allCategories->where('name', 'Sandwich')->first();
-            $sandwich['product_categories_id'] = $category->id;
+            $sandwich['product_category_id'] = $category->id;
             $user->company->companyProducts()->create(
                 $sandwich
             );
@@ -468,7 +468,7 @@ class CompanyProductsTableCustomSeeder extends Seeder
         // Pancake
         foreach ($attributes['Pancake'] as $pancake) {
             $category = $allCategories->where('name', 'Pancake')->first();
-            $pancake['product_categories_id'] = $category->id;
+            $pancake['product_category_id'] = $category->id;
             $user->company->companyProducts()->create(
                 $pancake
             );
@@ -477,7 +477,7 @@ class CompanyProductsTableCustomSeeder extends Seeder
         // Drinks
         foreach ($attributes['Drinks'] as $drink) {
             $category = $allCategories->where('name', 'Drinks')->first();
-            $drink['product_categories_id'] = $category->id;
+            $drink['product_category_id'] = $category->id;
             $user->company->companyProducts()->create(
                 $drink
             );

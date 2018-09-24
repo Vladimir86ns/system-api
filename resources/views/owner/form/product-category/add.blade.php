@@ -1,5 +1,5 @@
 <section class="content-header">
-  <h1>Create New Product</h1>
+  <h1>Create New Product Category</h1>
 </section>
 
 <section class="content">
@@ -12,18 +12,13 @@
           </h3>
         </div>
         <div class="panel-body">
-          <form action="/owner/store-product" method="POST" onsubmit="return Validation()" role="form" id="product_category">
-
+          <form action="/owner/product-category/store" method="POST" onsubmit="return Validation()" role="form" id="create_product_category">
             <div class="col-md-12">
-              <div class="form-group {{ $errors->first('product_categories_id', 'has-error') }}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <select class="form-control" name="product_categories_id">
-                  <option value="" selected disabled>Select product category</option>
-                  @foreach ($employees as $employee)
-                    <option value={{ $employee['id'] }}>{{ $employee['first_name'] }} {{ $employee['last_name'] }}</option>
-                  @endforeach
-                </select>
-                {!! $errors->first('product_categories_id', '<span class="help-block">:message</span>') !!}
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
+              <div class="form-group {{ $errors->first('name', 'has-error') }}">
+                <input type="text" name="name" id="name" class="form-control input-md" placeholder="Name of category">
+                {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
               </div>
             </div>
 

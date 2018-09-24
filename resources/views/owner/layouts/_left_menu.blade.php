@@ -21,7 +21,7 @@
 
       <!-- ADD PRODUCT CATEGORY -->
       <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
-        <a href="/owner/create-product-category">
+        <a href="/owner/product-category/create">
           <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
              data-loop="true"></i>
           <span class="title">Product Category</span>
@@ -39,7 +39,7 @@
 
       <!-- ADD NEW PRODUCT -->
       <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
-        <a href="/owner/create-product">
+        <a href="/owner/product/create">
           <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
              data-loop="true"></i>
           <span class="title">New Product</span>
@@ -79,7 +79,7 @@
 
       <!-- ADD NEW PRODUCT -->
       <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
-        <a href="#">
+        <a href="/owner/product/all">
           <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
              data-loop="true"></i>
           <span class="title">Products</span>

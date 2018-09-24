@@ -16,7 +16,7 @@ class CreateCompanyProductsTable extends Migration
     {
         Schema::create('company_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_categories_id')->unsigned()->nullable();
+            $table->integer('product_category_id')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 50);
             $table->string('type', 50)->nullable();
@@ -25,7 +25,7 @@ class CreateCompanyProductsTable extends Migration
             $table->decimal('price', 10, 2)->nullable();
             $table->string('picture')->nullable();
             $table->integer('time_to_prepare')->nullable();
-            $table->foreign('product_categories_id')->references('id')->on('product_categories');
+            $table->foreign('product_category_id')->references('id')->on('product_categories');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });

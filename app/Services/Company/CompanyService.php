@@ -2,6 +2,7 @@
 
 namespace App\Services\Company;
 
+use App\CompanyProduct;
 use App\User;
 use Sentinel;
 use App\Company;
@@ -12,32 +13,6 @@ use Illuminate\Support\Facades\DB;
 class CompanyService
 {
     use RedisTrait;
-    
-    /**
-     * Store new product category.
-     *
-     * @param array $attributes
-     * @param Company $company
-     *
-     * @return ProductCategory
-     */
-    public function storeProductCompany(array $attributes, Company $company)
-    {
-        return $company->productCategories()->create($attributes);
-    }
-
-    /**
-     * Store new product.
-     *
-     * @param array $attributes
-     * @param Company $company
-     *
-     * @return ProductCategory
-     */
-    public function storeProduct(array $attributes, Company $company)
-    {
-        return $company->companyProducts()->create($attributes);
-    }
 
     /**
      * Get all un selected employees.
