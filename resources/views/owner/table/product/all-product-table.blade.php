@@ -47,7 +47,7 @@
                    title="delete">
                  <i class="fa fa-fw fa-trash-o"></i>
                 </a>
-                <a href="#" title="edit">
+                <a href="/owner/product/edit/{{ $product['id'] }}" title="edit">
                   <i class="fa fa-fw fa-pencil"></i>
                 </a>
               </td>

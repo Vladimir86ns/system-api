@@ -63,9 +63,10 @@ Route::group([ 'prefix' => 'owner'], function () {
         Route::group([ 'prefix' => 'product'], function () {
             Route::get('/create', 'CompanyController@createProduct');
             Route::post('/store', 'CompanyController@storeProduct');
+            Route::get('/edit/{id}', 'CompanyController@editProduct');
+            Route::post('/update/{id}', 'CompanyController@updateProduct');
             Route::get('/all', 'CompanyController@getAllProducts');
             Route::get('/by-name', 'CompanyController@getByName');
-            
         });
         
         // product-category

@@ -130,6 +130,20 @@ class CompanyService
             ->with('productCategory')
             ->paginate(10);
     }
+    
+    /**
+     * Get company product by id.
+     *
+     * @param Company $company.
+     * @param int $productId Product ID.
+     * @return CompanyProduct
+     */
+    public function getProduct(Company $company, int $productId)
+    {
+        return CompanyProduct::where('company_id', $company->id)
+            ->with('productCategory')
+            ->find($productId);
+    }
 
     /**
      * Get ids from redis, and return employees with selected propery.

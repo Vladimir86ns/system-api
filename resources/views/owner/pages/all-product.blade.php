@@ -8,6 +8,12 @@
 
 {{-- Page content --}}
 @section('content')
-  @include('owner.table.product.all-product-table')
+
+  @if (isset($selectedProduct))
+    @include('owner.form.product.edit')
+  @else
+    @include('owner.table.product.all-product-table')
+  @endif
+
 @stop
 

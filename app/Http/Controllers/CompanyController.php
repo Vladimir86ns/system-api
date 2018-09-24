@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyProductRequest;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyValidationService;
+use App\Services\CompanyProduct\CompanyProductService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Traits\User\UserTrait;
@@ -23,6 +24,11 @@ class CompanyController extends Controller
      * @var CompanyValidationService
      */
     protected $validation;
+    
+    /**
+     * @var CompanyProductServicec
+     */
+    protected $companyProductService;
 
     /**
      * CompanyController
@@ -32,10 +38,12 @@ class CompanyController extends Controller
      */
     public function __construct(
         CompanyService $companyService,
-        CompanyValidationService $companyValidationService
+        CompanyValidationService $companyValidationService,
+        CompanyProductService $companyProductService
     ) {
         $this->service = $companyService;
         $this->validation = $companyValidationService;
+        $this->companyProductService = $companyProductService;
     }
 
     /**
@@ -182,5 +190,41 @@ class CompanyController extends Controller
         }
     
         return view('owner.pages.all-product', compact(['products']));
+    }
+    
+    /**
+     * Get all company products, and selected product for edit page.
+     *
+     * @param int $id Product ID
+     * @return CompanyProduct;
+     */
+    public function editProduct($id)
+    {
+        $company = $this->validation->getCompanyFromUserRelation();
+        $productCategories = $company->productCategories->toArray();
+        $products = $this->service->getAllProducts($company);
+        $selectedProduct = $this->service->getProduct($company, $id);
+
+        return view('owner.pages.all-product', compact(['products', 'selectedProduct', 'productCategories']));
+    }
+    
+    /**
+     * Update company product in DB.
+     *
+     * @param int $id Product ID
+     * @return view
+     */
+    public function updateProduct($id, CompanyProductRequest $request)
+    {
+        $company = $this->validation->getCompanyFromUserRelation();
+        $updated = $this->companyProductService->updateProduct($company, $id, $request->all());
+        
+        if (!$updated) {
+            return redirect('/owner/product/all')
+                ->with("error", "Something went wrong!");
+        }
+    
+        return redirect('/owner/product/all')
+            ->with("success", "Successfully updated {$request->get('name')} product!");
     }
 }
