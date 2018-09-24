@@ -42,7 +42,7 @@
               <td>{{ number_format($product['price'], 2) }}</td>
               <td>{{ $product['time_to_prepare'] }} min</td>
               <td>
-                <a href="#"
+                <a href="/owner/product/delete/{{ $product['id'] }}"
                    onclick="return confirm('This will delete the product. Are you sure you want to proceed?')"
                    title="delete">
                  <i class="fa fa-fw fa-trash-o"></i>

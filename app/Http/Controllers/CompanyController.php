@@ -68,7 +68,7 @@ class CompanyController extends Controller
         ]);
 
         $company = $this->validation->getCompanyFromUserRelation();
-        $newProductCategory = $this->service->storeProductCategory($request->all(), $company);
+        $newProductCategory = $this->companyProductService->storeProductCategory($request->all(), $company);
 
         if (!$newProductCategory) {
             return redirect('/owner/create-product-category')
@@ -100,7 +100,7 @@ class CompanyController extends Controller
     public function storeProduct(CompanyProductRequest $request)
     {
         $company = $this->validation->getCompanyFromUserRelation();
-        $newProduct = $this->service->storeProduct($request->all(), $company);
+        $newProduct = $this->companyProductService->storeProduct($request->all(), $company);
 
         if (!$newProduct) {
             return redirect('/owner/create-product')
@@ -168,7 +168,7 @@ class CompanyController extends Controller
     public function getAllProducts()
     {
         $company = $this->validation->getCompanyFromUserRelation();
-        $products = $this->service->getAllProducts($company);
+        $products = $this->companyProductService->getAllProducts($company);
         
         return view('owner.pages.all-product', compact(['products']));
     }
@@ -184,7 +184,7 @@ class CompanyController extends Controller
         $company = $this->validation->getCompanyFromUserRelation();
         
         if ($name) {
-            $products = $this->service->getAllProductsByName($company, $name);
+            $products = $this->companyProductService->getAllProductsByName($company, $name);
         } else {
             return $this->getAllProducts();
         }
@@ -202,8 +202,8 @@ class CompanyController extends Controller
     {
         $company = $this->validation->getCompanyFromUserRelation();
         $productCategories = $company->productCategories->toArray();
-        $products = $this->service->getAllProducts($company);
-        $selectedProduct = $this->service->getProduct($company, $id);
+        $products = $this->companyProductService->getAllProducts($company);
+        $selectedProduct = $this->companyProductService->getProduct($company, $id);
 
         return view('owner.pages.all-product', compact(['products', 'selectedProduct', 'productCategories']));
     }
@@ -226,5 +226,23 @@ class CompanyController extends Controller
     
         return redirect('/owner/product/all')
             ->with("success", "Successfully updated {$request->get('name')} product!");
+    }
+    
+    /**
+     * Delete company product.
+     *
+     * @param int $id Product ID
+     * @return view
+     */
+    public function deleteProduct($id)
+    {
+        $deleted = $this->companyProductService->delete($id);
+        
+        if (!$deleted) {
+            return redirect('/owner/product/all')
+                ->with("error", "Something went wrong!");
+        }
+        return redirect('/owner/product/all')
+            ->with("success", "Successfully deleted product!");
     }
 }

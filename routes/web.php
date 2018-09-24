@@ -67,6 +67,7 @@ Route::group([ 'prefix' => 'owner'], function () {
             Route::post('/update/{id}', 'CompanyController@updateProduct');
             Route::get('/all', 'CompanyController@getAllProducts');
             Route::get('/by-name', 'CompanyController@getByName');
+            Route::get('/delete/{id}', 'CompanyController@deleteProduct');
         });
         
         // product-category
