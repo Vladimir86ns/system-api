@@ -31,6 +31,12 @@ $api->version('v1', function ($api) {
             $api->post('{id}/order-done/{orderId}', 'CompanyOrderController@orderIsDone');
         $api->post('{id}/order-close/{orderId}', 'CompanyOrderController@orderIsClose');
         });
+    
+        // company
+        $api->group([ 'prefix' => 'employee'], function ($api) {
+            $api->post('register-company', 'CompanyUserRegisterController@registerEmployee');
+            $api->post('login-company', 'CompanyUserRegisterController@loginEmployee');
+        });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
         //

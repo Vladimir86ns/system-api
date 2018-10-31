@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use JWTAuth;
 use App\User;
 use Sentinel;
 use Illuminate\Http\Request;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\BaseController;
 use App\Transformers\Company\CompanyUserTransformer;
 
 class CompanyUserRegisterController extends BaseController
 {
+    
     /**
      * @var CompanyUserTransformer
      */
@@ -75,6 +76,38 @@ class CompanyUserRegisterController extends BaseController
         $token = JWTAuth::fromUser($user);
         $transformedUser = $this->companyUserTransformer->transform($user, $token);
 
+        return $this->response->array($transformedUser);
+    }
+    
+    public function registerEmployee(Request $request)
+    {
+        $inputs = $request->all();
+
+        if ($inputs['employee_password'] !== $inputs['repeat_employee_password']) {
+            abort(400, 'Passwords should be the same!');
+        }
+        
+        if (Sentinel::authenticate($request->only(['email', 'password']))) {
+            $user = User::find(Sentinel::getUser()->id);
+        } else {
+            abort(400, 'Your email or password are not correct!');
+        }
+        
+        $permissions = json_decode($user->permissions, true);
+
+        // check dose user has owner permissions
+        if (!array_key_exists('employee', $permissions) || $permissions['employee'] == 0) {
+            abort(400, 'Your are not authorized!');
+        }
+    
+        $dt = Carbon::now('Europe/Belgrade');
+        $dt->addHours(8);
+        
+        $token = JWTAuth::fromUser($user, ['exp' => $dt->timestamp]);
+        $user->employee_company_password = Hash::make($inputs['employee_password']);
+        $user->save();
+        $transformedUser = $this->companyUserTransformer->transform($user, $token);
+        
         return $this->response->array($transformedUser);
     }
 }
