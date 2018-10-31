@@ -31,7 +31,7 @@ class CompanyProductRequest extends FormRequest
             'cost' => 'required|numeric|min:1',
             'price' => 'required|numeric|min:1',
             'time_to_prepare' => 'numeric|required',
-            // 'picture' => 'mimes:jpg,jpeg,bmp,png,gif|max:10000'
+            'image-upload' => 'required|mimes:jpg,jpeg,bmp,png,gif|max:10000'
         ];
     }
 }

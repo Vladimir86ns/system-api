@@ -6,10 +6,10 @@ use App\Http\Requests\CompanyProductRequest;
 use App\Services\Company\CompanyService;
 use App\Services\Company\CompanyValidationService;
 use App\Services\CompanyProduct\CompanyProductService;
-use App\User;
 use Illuminate\Http\Request;
 use App\Traits\User\UserTrait;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class CompanyController extends Controller
 {
@@ -99,8 +99,25 @@ class CompanyController extends Controller
      */
     public function storeProduct(CompanyProductRequest $request)
     {
+        $image = $request->file('image-upload');
+        
+        $inputs = $request->all();
+        
         $company = $this->validation->getCompanyFromUserRelation();
-        $newProduct = $this->companyProductService->storeProduct($request->all(), $company);
+        
+        if ($image) {
+            $fileName = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('/uploads/company-product/' . $company->id . '/');
+    
+            if(!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            
+            Image::make($image)->resize(512, 512)->save($path . $fileName);
+        }
+        
+        $inputs['picture'] = $fileName;
+        $newProduct = $this->companyProductService->storeProduct($inputs, $company);
 
         if (!$newProduct) {
             return redirect('/owner/create-product')
