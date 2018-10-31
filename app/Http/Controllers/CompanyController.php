@@ -71,11 +71,11 @@ class CompanyController extends Controller
         $newProductCategory = $this->companyProductService->storeProductCategory($request->all(), $company);
 
         if (!$newProductCategory) {
-            return redirect('/owner/create-product-category')
+            return redirect('/owner/product-category/create')
                 ->with("error", "Something went wrong!");
         }
 
-        return redirect('/owner/create-product-category')
+        return redirect('/owner/product-category/create')
             ->with("success", "A new product category {$newProductCategory->name} is successfully added!");
     }
     
@@ -120,11 +120,11 @@ class CompanyController extends Controller
         $newProduct = $this->companyProductService->storeProduct($inputs, $company);
 
         if (!$newProduct) {
-            return redirect('/owner/create-product')
+            return redirect('/owner/product/create')
                 ->with("error", "Something went wrong!");
         }
     
-        return redirect('/owner/create-product')
+        return redirect('/owner/product/create')
             ->with("success", "A new product {$newProduct->name} is successfully added!");
     }
     
