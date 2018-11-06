@@ -18,8 +18,8 @@ $api = app(Router::class);
 
 $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => 'api'], function (Router $api) {
-        $api->post('register-company', 'CompanyUserRegisterController@register');
-        $api->post('login-company', 'CompanyUserRegisterController@login');
+        $api->post('register-company', 'CompanyUserRegisterController@registerCompany');
+        $api->post('login-company', 'CompanyUserRegisterController@loginCompany');
 
         // company
         $api->group([ 'prefix' => 'company'], function ($api) {
@@ -32,10 +32,10 @@ $api->version('v1', function ($api) {
         $api->post('{id}/order-close/{orderId}', 'CompanyOrderController@orderIsClose');
         });
     
-        // company
+        // employee
         $api->group([ 'prefix' => 'employee'], function ($api) {
-            $api->post('register-company', 'CompanyUserRegisterController@registerEmployee');
-            $api->post('login-company', 'CompanyUserRegisterController@loginEmployee');
+            $api->post('register-employee', 'CompanyUserRegisterController@registerEmployee');
+            $api->post('login-employee', 'CompanyUserRegisterController@loginEmployee');
         });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
