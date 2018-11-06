@@ -25,7 +25,7 @@ class CompanyUserRegisterController extends BaseController
         $this->companyUserTransformer = $companyUserTransformer;
     }
 
-    public function register(Request $request)
+    public function registerCompany(Request $request)
     {
         $inputs = $request->all();
 
@@ -54,7 +54,7 @@ class CompanyUserRegisterController extends BaseController
         return $this->response->array($transformedUser);
     }
 
-    public function login(Request $request)
+    public function loginCompany(Request $request)
     {
         $credentials = $request->all();
         $user = User::where('email', $credentials['email'])->first();
@@ -92,7 +92,7 @@ class CompanyUserRegisterController extends BaseController
         } else {
             abort(400, 'Your email or password are not correct!');
         }
-        
+
         $permissions = json_decode($user->permissions, true);
 
         // check dose user has owner permissions
@@ -106,6 +106,31 @@ class CompanyUserRegisterController extends BaseController
         $token = JWTAuth::fromUser($user, ['exp' => $dt->timestamp]);
         $user->employee_company_password = Hash::make($inputs['employee_password']);
         $user->save();
+        $transformedUser = $this->companyUserTransformer->transform($user, $token);
+        
+        return $this->response->array($transformedUser);
+    }
+    
+    public function loginEmployee(Request $request)
+    {
+        $credentials = $request->all();
+        $user = User::where('email', $credentials['email'])->first();
+        
+        if (!$user) {
+            abort(400, 'Your credentials are not correct!');
+        }
+        
+        if (!Hash::check($credentials['employee_company_password'], $user->employee_company_password)) {
+            abort(400, 'Your credentials are not correct!');
+        }
+        
+        $permissions = json_decode($user->permissions, true);
+        
+        if (!array_key_exists('employee', $permissions) || $permissions['employee'] == 0) {
+            abort(400, 'Your are not authorized!');
+        }
+        
+        $token = JWTAuth::fromUser($user);
         $transformedUser = $this->companyUserTransformer->transform($user, $token);
         
         return $this->response->array($transformedUser);
