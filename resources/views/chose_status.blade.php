@@ -15,6 +15,35 @@
 </head>
 
 <body>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="alert alert-info text-center">
+          <h2>Total Investitions</h2>
+          <p>{{  $vgSystem['total_investitions'] }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="alert alert-warning text-center">
+          <h2>Total Invested</h2>
+          <p>{{ $vgSystem['collected_to_date'] }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="alert alert-success text-center">
+          <h2>Available To Invest</h2>
+          <p>{{ $vgSystem['available_to_invest'] }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- /container -->
+
   <div class="container">
     <div class="row vertical-offset-100">
       <div class=" col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">
@@ -37,6 +66,8 @@
         </div>
       </div>
     </div>
+  </div>
+
     <!-- global js -->
     <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
     <!-- end of global js -->

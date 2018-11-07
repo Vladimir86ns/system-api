@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Services\VgSystem\VgSystemService;
 use Redirect;
 use Sentinel;
 
@@ -14,10 +15,11 @@ class AuthController
      *
      * @return View
      */
-    public function choseStatus()
+    public function choseStatus(VgSystemService $vgSystemService)
     {
-        // Show the page
-        return view('chose_status');
+        $vgSystem = $vgSystemService->getVgSystemFromTransformer();
+
+        return view('chose_status', compact(['vgSystem']));
     }
 
     /**
