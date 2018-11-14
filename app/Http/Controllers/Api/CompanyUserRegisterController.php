@@ -86,7 +86,7 @@ class CompanyUserRegisterController extends BaseController
         if ($inputs['employee_password'] !== $inputs['repeat_employee_password']) {
             abort(400, 'Passwords should be the same!');
         }
-        
+
         if (Sentinel::authenticate($request->only(['email', 'password']))) {
             $user = User::find(Sentinel::getUser()->id);
         } else {
@@ -107,7 +107,7 @@ class CompanyUserRegisterController extends BaseController
         $user->employee_company_password = Hash::make($inputs['employee_password']);
         $user->save();
         $transformedUser = $this->companyUserTransformer->transform($user, $token);
-        
+
         return $this->response->array($transformedUser);
     }
     
