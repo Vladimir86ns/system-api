@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\BaseController;
 use App\Transformers\Company\CompanyUserTransformer;
 
-class CompanyUserRegisterController extends BaseController
+class CompanyUserController extends BaseController
 {
-    
     /**
      * @var CompanyUserTransformer
      */
@@ -79,7 +78,7 @@ class CompanyUserRegisterController extends BaseController
         return $this->response->array($transformedUser);
     }
     
-    public function registerEmployee(Request $request)
+    public function registerCompanyEmployee(Request $request)
     {
         $inputs = $request->all();
 
@@ -111,7 +110,7 @@ class CompanyUserRegisterController extends BaseController
         return $this->response->array($transformedUser);
     }
     
-    public function loginEmployee(Request $request)
+    public function loginCompanyEmployee(Request $request)
     {
         $credentials = $request->all();
         $user = User::where('email', $credentials['email'])->first();
