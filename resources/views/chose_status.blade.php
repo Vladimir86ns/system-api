@@ -58,9 +58,9 @@
           </div>
 
           <div class="panel-body">
-            <a href="/employee/login" class="btn btn-primary btn-block btn-lg">Employee</a>
-            <a href="/owner/login" class="btn btn-primary btn-block btn-lg">Owner</a>
-            <a href="/investor/login" class="btn btn-primary btn-block btn-lg">Investor</a>
+            <a href="/employee/login" class="btn btn-primary btn-block btn-lg">Employee ({{ $vgSystem['employee'] }})</a>
+            <a href="/owner/login" class="btn btn-primary btn-block btn-lg">Owner ({{ $vgSystem['owner'] }})</a>
+            <a href="/investor/login" class="btn btn-primary btn-block btn-lg">Investor ({{ $vgSystem['investor'] }})</a>
             <a href="/investment-admin/login" class="btn btn-primary btn-block btn-lg">Investment Admin</a>
           </div>
         </div>

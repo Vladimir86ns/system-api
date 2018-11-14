@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\VgSystem\VgSystemService;
+use App\User;
 use Redirect;
 use Sentinel;
 
@@ -17,7 +18,31 @@ class AuthController
      */
     public function choseStatus(VgSystemService $vgSystemService)
     {
+        
+        
         $vgSystem = $vgSystemService->getVgSystemFromTransformer();
+        $vgSystem['employee'] = 0;
+        $vgSystem['investor'] = 0;
+        $vgSystem['owner'] = 0;
+        
+        $users = User::get();
+    
+        // count how many employee, owner, investors
+        foreach ($users as $user) {
+            $permissions = json_decode($user->permissions, true);
+            
+            if (array_key_exists('employee', $permissions)) {
+                $vgSystem['employee']++;
+            }
+    
+            if (array_key_exists('investor', $permissions)) {
+                $vgSystem['investor']++;
+            }
+    
+            if (array_key_exists('owner', $permissions)) {
+                $vgSystem['owner']++;
+            }
+        }
 
         return view('chose_status', compact(['vgSystem']));
     }

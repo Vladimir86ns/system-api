@@ -93,12 +93,8 @@ class InvestorUserController extends Controller
 
         try {
             $user = $this->userService->registerAndActivateNewUser($inputs);
-            Sentinel::login($user, false);
-
-            return redirect('/investor/dashboard')->with(
-                "success",
-                "{$user->first_name}, you are registered! Welcome as Investor!"
-            );
+            
+            return $user;
         } catch (UserExistsException $e) {
             return redirect()->back()->withInput()->withErrors($this->messageBag);
         }
