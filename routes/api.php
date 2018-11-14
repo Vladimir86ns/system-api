@@ -18,8 +18,8 @@ $api = app(Router::class);
 
 $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => 'api'], function (Router $api) {
-        $api->post('register-company', 'CompanyUserRegisterController@registerCompany');
-        $api->post('login-company', 'CompanyUserRegisterController@loginCompany');
+        $api->post('register-company', 'CompanyUserController@registerCompany');
+        $api->post('login-company', 'CompanyUserController@loginCompany');
 
         // company
         $api->group([ 'prefix' => 'company'], function ($api) {
@@ -29,13 +29,19 @@ $api->version('v1', function ($api) {
             $api->get('{id}/get-orders', 'CompanyOrderController@getOrders');
             $api->get('{id}/get-done-orders', 'CompanyOrderController@getOrdersStatusDone');
             $api->post('{id}/order-done/{orderId}', 'CompanyOrderController@orderIsDone');
+            
+            // company/employee //
+            $api->group([ 'prefix' => 'employee'], function ($api) {
+                $api->post('register-employee', 'CompanyUserController@registerCompanyEmployee');
+                $api->post('login-employee', 'CompanyUserController@loginCompanyEmployee');
+            });
         $api->post('{id}/order-close/{orderId}', 'CompanyOrderController@orderIsClose');
         });
     
         // employee
         $api->group([ 'prefix' => 'employee'], function ($api) {
-            $api->post('register-employee', 'CompanyUserRegisterController@registerEmployee');
-            $api->post('login-employee', 'CompanyUserRegisterController@loginEmployee');
+            $api->post('register-employee', 'EmployeeUserController@signUp');
+            $api->get('login-employee', 'EmployeeUserController@signIn');
         });
     });
     $api->group(['namespace' => 'App\Http\Controllers'], function (Router $api) {
