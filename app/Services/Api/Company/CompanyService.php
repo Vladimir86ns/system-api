@@ -2,11 +2,17 @@
 
 namespace App\Services\Api\Company;
 
+use App\Company;
 use App\CompanyProduct;
 use App\ProductCategory;
 
 class CompanyService
 {
+    public function getAll()
+    {
+        return Company::get();
+    }
+    
     /**
      * Get all company product categories
      *
