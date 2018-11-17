@@ -23,6 +23,7 @@ $api->version('v1', function ($api) {
 
         // company
         $api->group([ 'prefix' => 'company'], function ($api) {
+            $api->get('all', 'CompanyController@getAll');
             $api->get('get-product-categories/{id}', 'CompanyProductController@getProductCategories');
             $api->get('products/{id}', 'CompanyProductController@getProducts');
             $api->post('{id}/order', 'CompanyOrderController@order');

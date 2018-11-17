@@ -4,7 +4,6 @@ namespace App\Services\AdminInvestment;
 
 use App\User;
 use App\AdminInvestment;
-use Illuminate\Support\Facades\DB;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Manager as FractalManager;
 use App\Transformers\AdminInvestment\AdminInvestmentTransformer;

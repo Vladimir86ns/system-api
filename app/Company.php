@@ -33,7 +33,7 @@ class Company extends Model
      */
     public function adminInvestment()
     {
-        return $this->belongsTo(InvestmentsAdmin::class);
+        return $this->belongsTo(AdminInvestment::class);
     }
 
     /**
