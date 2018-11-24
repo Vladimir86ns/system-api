@@ -2,7 +2,6 @@
 
 namespace App\Services\CompanyProduct;
 
-
 use App\Company;
 use App\CompanyProduct;
 use App\Traits\Redis\RedisTrait;

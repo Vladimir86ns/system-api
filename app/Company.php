@@ -67,4 +67,12 @@ class Company extends Model
     {
         return $this->hasMany(CompanyProduct::class);
     }
+    
+    /**
+     * Get the employee..
+     */
+    public function employeeSchedule()
+    {
+        return $this->hasOne(EmployeeSchedule::class);
+    }
 }

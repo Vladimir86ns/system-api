@@ -11,6 +11,9 @@ use App\Traits\User\UserTrait;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ **/
 class CompanyController extends Controller
 {
     use UserTrait;
@@ -109,7 +112,7 @@ class CompanyController extends Controller
             $fileName = time() . '.' . $image->getClientOriginalExtension();
             $path = public_path('/uploads/company-product/' . $company->id . '/');
     
-            if(!File::exists($path)) {
+            if (!File::exists($path)) {
                 File::makeDirectory($path);
             }
             

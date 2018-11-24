@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Sentinel;
 use Illuminate\Http\Request;
 use App\Http\Requests\OwnerUserRequest;
@@ -64,6 +66,9 @@ class OwnerUserController extends Controller
     public function signIn(Request $request)
     {
         if (Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
+            // TODO  for now get user from email, because of SENTINEL library.
+            $user = User::where('email', $request->only(['email']))->first();
+            Auth::login($user);
             return redirect('owner/dashboard');
         }
 

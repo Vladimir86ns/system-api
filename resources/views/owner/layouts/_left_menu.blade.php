@@ -89,5 +89,26 @@
     </ul>
   </li>
 
+  <!-- SEE ALL PRODUCTS -->
+  <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+    <a href="#">
+      <i class="livicon" data-name="rocket" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+         data-loop="true"></i>
+      <span class="title">Employee Time</span>
+      <span class="fa arrow"></span>
+    </a>
+    <ul class="sub-menu">
+
+      <!-- SEE ALL PRODUCT CATEGORY -->
+      <li {!! (Request::is('groups') || Request::is('groups/create') || Request::is('groups/*') ? 'class="active"' : '') !!}>
+        <a href="/owner/company/{{ Auth::user()->company->id }}/all-employees">
+          <i class="livicon" data-name="piggybank" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+             data-loop="true"></i>
+          <span class="title">Schedule</span>
+        </a>
+      </li>
+
+  </li>
+
 
 </ul>
