@@ -70,6 +70,7 @@ class CompanyService
             foreach ($employees as $employee) {
                 $employee->company_id = $company->id;
                 $employee->employee_active = 1;
+                $employee->employee_id = 'CE-' . $company->id . $employee->id;
                 $employee->save();
             }
         });
