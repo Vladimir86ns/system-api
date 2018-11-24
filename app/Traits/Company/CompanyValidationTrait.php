@@ -2,7 +2,9 @@
 
 namespace App\Traits\Company;
 
+use App\Company;
 use App\Traits\User\UserTrait;
+use Symfony\Component\HttpFoundation\Response;
 
 trait CompanyValidationTrait
 {
@@ -26,11 +28,35 @@ trait CompanyValidationTrait
 
         abort(404, "Company ID: {$id} is invalid!");
     }
-
+    
+    /**
+     * Validate Company exist
+     *
+     * @param int $id Company ID
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function validateCompanyId($id)
+    {
+        $this->validateId($id);
+        
+        $company = Company::find($id);
+        
+        if (!$company) {
+            throw new \Exception(
+                "Company ID: {$id} is invalid!",
+                Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+    
+    
     /**
      * Validate User company relatrion.
      *
-     * @return \Company
+     * @return mixed
+     * @throws \Exception
      */
     public function getCompanyFromUserRelation()
     {
@@ -39,7 +65,14 @@ trait CompanyValidationTrait
         if ($company) {
             return $company;
         }
-
-        abort(404, "Company not found!");
+        
+        throw new \Exception("Company not found!", Response::HTTP_NOT_FOUND);
+    }
+    
+    private function validateId($id)
+    {
+        if (!is_numeric($id)) {
+            throw new \Exception("Id must be number!", Response::HTTP_NOT_ACCEPTABLE);
+        }
     }
 }

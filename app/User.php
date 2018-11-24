@@ -60,4 +60,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(VgSystemSharing::class);
     }
+    
+    /**
+     * Get schedule.
+     */
+    public function schedule()
+    {
+        return $this->hasOne(EmployeeSchedule::class);
+    }
 }

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Services\VgSystem\VgSystemService;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Redirect;
 use Sentinel;
 
@@ -54,6 +55,7 @@ class AuthController
      */
     public function getLogout()
     {
+        // TODO  for now log out user like this , because of SENTINEL library.
         Sentinel::logout(Sentinel::getUser());
 
         return Redirect::to('/')->with('success', 'You have successfully logged out!');

@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', 'AuthController@choseStatus');
 
 //  INVESTMENTS-ADMIN
@@ -82,6 +71,12 @@ Route::group([ 'prefix' => 'owner'], function () {
             Route::get('/{id}/select', 'CompanyController@selectEmployees');
             Route::get('/{id}/un-select', 'CompanyController@unSelectEmployees');
             Route::get('/hire', 'CompanyController@hireEmployees');
+        });
+    
+        // company
+        Route::group([ 'prefix' => 'company'], function () {
+            Route::get('/{id}/all-employees', 'CompanyEmployeeController@getAllCompanyEmployees');
+            Route::post('{id}/employee/schedule', 'CompanyEmployeeController@saveSchedule');
         });
     });
     

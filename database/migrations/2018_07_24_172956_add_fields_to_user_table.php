@@ -25,6 +25,7 @@ class AddFieldsToUserTable extends Migration
             $table->string('postal')->nullable();
             $table->integer('employee_active')->default(false);
             $table->integer('company_id')->nullable();
+            $table->string('employee_id')->nullable();
         });
     }
 
