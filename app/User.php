@@ -26,6 +26,15 @@ class User extends Authenticatable
         'company_id',
         'postal',
     ];
+    
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'employee_active' => 'boolean',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
