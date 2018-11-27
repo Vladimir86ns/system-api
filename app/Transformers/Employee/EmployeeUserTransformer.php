@@ -24,6 +24,7 @@ class EmployeeUserTransformer extends TransformerAbstract
             // if an employee, he has in db base field with company_id.
             'company_id' => $user->company->id ?? $user->company_id,
             'schedule' => $user->schedule,
+            'employee_active' => $user->employee_active,
             'employee_id' => $user->employee_id,
             'jwt_token' => $token,
         ];
